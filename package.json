@@ -1,0 +1,19 @@
+{
+  "name": "utip",
+  "version": "1.0.0",
+  "description": "正在迁移脚手架工具，勿删，谢谢",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iuap-design/utip.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/iuap-design/utip/issues"
+  },
+  "homepage": "https://github.com/iuap-design/utip#readme"
+}
