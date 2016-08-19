@@ -1,10 +1,13 @@
 {
   "name": "utip",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "正在迁移脚手架工具，勿删，谢谢",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "utip": "bin/idever"
   },
   "repository": {
     "type": "git",
