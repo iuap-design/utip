@@ -50,7 +50,7 @@ module.exports = function() {
 					case 'sparrow':
 						console.log('sparrow read');
 						newSparrow = newVersion;
-						command = `cd ${resPath} && npm publish && cd ..`;
+						command = `cd ${resPath} && npm run product && npm publish && cd ..`;
 
 						execSync(command, (error, stdout, stderr) => {
 					      if (error) {
@@ -64,7 +64,7 @@ module.exports = function() {
 					case 'neoui':
 						console.log(`${resname} read`);
 						newNeoui = newVersion;
-						command = `cd ${resPath} && npm uninstall neoui-sparrow && npm install neoui-sparrow@${newSparrow} --save && npm publish && cd ..`;
+						command = `cd ${resPath} && npm uninstall neoui-sparrow && npm install neoui-sparrow@${newSparrow} --save && npm run product && npm publish && cd ..`;
 
 						execSync(command, (error, stdout, stderr) => {
 					      if (error) {
@@ -78,7 +78,7 @@ module.exports = function() {
 					case 'kero':
 						console.log(`${resname} read`);
 						newKero = newVersion;
-						command = `cd ${resPath} && npm uninstall neoui-sparrow && npm install neoui-sparrow@${newSparrow} --save && npm publish && cd ..`;
+						command = `cd ${resPath} && npm uninstall neoui-sparrow && npm install neoui-sparrow@${newSparrow} --save && npm run product && npm publish && cd ..`;
 
 						execSync(command, (error, stdout, stderr) => {
 					      if (error) {
@@ -91,7 +91,7 @@ module.exports = function() {
 						break;
 					default:
 						console.log('kero-adapter read')
-						command = `cd ${resPath} && npm uninstall neoui-sparrow neoui kero && npm install neoui-sparrow@${newSparrow} kero@${newKero} neoui@${newNeoui} --save && cd ..`;
+						command = `cd ${resPath} && npm uninstall neoui-sparrow neoui kero && npm install neoui-sparrow@${newSparrow} kero@${newKero} neoui@${newNeoui} --save && npm run product && npm publish && cd ..`;
 						execSync(command, (error, stdout, stderr) => {
 					      if (error) {
 					        console.log(error)
