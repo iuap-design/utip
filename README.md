@@ -29,7 +29,7 @@ $ utip p
 * 初始化：如本地目录未下载完整仓库:`sparrow`,`neoui`,`kero`,`kero-adapter`，会拉取仓库到本地
 * 仓库更新：自动获取更新，合并以上项目的`release`分支
 * 复制源码：自动复制所有源码`js`到依赖库`node_modules`中
-* 生成文件：自动在kero-adapter的`dist`目录中生成最新`u.js`文件
+* 输出文件：自动在kero-adapter的`dist`目录中生成最新`u.js`文件
 
 **utip publish | utip p**
 
@@ -37,7 +37,12 @@ $ utip p
 
 * 更改版本：自动更新源码库`package`的版本，采用小版本+1进行升级
 * 更改依赖：自动更新各库在`package`的依赖版本
+* 输出文件：自动在各仓库输出`dist`目录
 * npm发布：自动发布最新版本到`npm`
 
-`tip publish`不会将仓库git提交远程，此部分功能需要确认需求再进行添加。
 
+
+### 注意事项
+
+* 执行 `tip publish`，因存在冲突的风险，不会将仓库git提交远程，此部分功能需要确认需求再进行添加
+* 执行`tip build`，使用了`cnpm install`来下载依赖包
