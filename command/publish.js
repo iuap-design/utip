@@ -1,6 +1,6 @@
 const fs = require('fs');
 const envPath = process.cwd();
-const exec = require('child_process').exec;
+const execSync = require('child_process').execSync;
 const chalk = require('chalk');
 const fse = require('fs-extra');
 const path = require('path');
@@ -19,10 +19,93 @@ module.exports = function() {
 	console.log('发包');
 
 	var pubFun = {
-		init: function(){
-			this.whole();
+		init: function() {
+			this.pkg();
+		},
+		/**
+		 * 更改各仓库package.json文件,并提交
+		 */
+		pkg: function() {
+			var newSparrow,newNeoui,newKero;
+			frameDir.forEach(function(resname){
+				var originVersion = require(envPath+ '/' + resname + '/package.json').version.split('.');
+				originVersion[originVersion.length-1]++;
+				var newVersion = originVersion.join('.');
+				console.log(newVersion);
+				
+				// 读取写入替换内容-按时取消write
+				var readData = fs.readFileSync(envPath+ '/' + resname + '/package.json', 'utf-8');
+				var result = readData.replace(/("version":\s*")(\d+.\d+.\d+)"/,`$1${newVersion}"`);
+				fs.writeFileSync(envPath+ '/' + resname + '/package.json',result, 'utf-8');
+
+
+				// 执行路径
+				var resPath = envPath+ '/' + resname;
+				var command;
+				console.log(resPath);
+
+
+				// 更改依赖
+				switch (resname){
+					case 'sparrow':
+						console.log('sparrow read');
+						newSparrow = newVersion;
+						command = `cd ${resPath} && npm publish && cd ..`;
+
+						execSync(command, (error, stdout, stderr) => {
+					      if (error) {
+					        console.log(error)
+					        process.exit()
+					      }
+					      console.log(chalk.green('\n √ 正在测试发包'))
+					      process.exit()
+					    })
+						break;
+					case 'neoui':
+						console.log(`${resname} read`);
+						newNeoui = newVersion;
+						command = `cd ${resPath} && npm uninstall neoui-sparrow && npm install neoui-sparrow@${newSparrow} --save && npm publish && cd ..`;
+
+						execSync(command, (error, stdout, stderr) => {
+					      if (error) {
+					        console.log(error)
+					        process.exit()
+					      }
+					      console.log(chalk.green('\n √ 正在测试发包'))
+					      process.exit()
+					    })
+						break;
+					case 'kero':
+						console.log(`${resname} read`);
+						newKero = newVersion;
+						command = `cd ${resPath} && npm uninstall neoui-sparrow && npm install neoui-sparrow@${newSparrow} --save && npm publish && cd ..`;
+
+						execSync(command, (error, stdout, stderr) => {
+					      if (error) {
+					        console.log(error)
+					        process.exit()
+					      }
+					      console.log(chalk.green('\n √ 正在测试发包'))
+					      process.exit()
+					    })
+						break;
+					default:
+						console.log('kero-adapter read')
+						command = `cd ${resPath} && npm uninstall neoui-sparrow neoui kero && npm install neoui-sparrow@${newSparrow} kero@${newKero} neoui@${newNeoui} --save && cd ..`;
+						execSync(command, (error, stdout, stderr) => {
+					      if (error) {
+					        console.log(error)
+					        process.exit()
+					      }
+					      console.log(chalk.green('\n √ 正在测试发包'))
+					      process.exit()
+					    })
+				}
+			});
 		}
 	}
+
+	pubFun.init();
 
 
 
