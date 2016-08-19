@@ -1,6 +1,6 @@
 {
   "name": "utip",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "正在迁移脚手架工具，勿删，谢谢",
   "main": "index.js",
   "scripts": {
@@ -18,5 +18,12 @@
   "bugs": {
     "url": "https://github.com/iuap-design/utip/issues"
   },
-  "homepage": "https://github.com/iuap-design/utip#readme"
+  "homepage": "https://github.com/iuap-design/utip#readme",
+  "dependencies": {
+    "chalk": "^1.1.3",
+    "co": "^4.6.0",
+    "co-prompt": "^1.0.0",
+    "commander": "^2.9.0",
+    "fs-extra": "^0.30.0"
+  }
 }
