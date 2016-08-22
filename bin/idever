@@ -22,7 +22,7 @@ program
 program
 	.command('temp')
 	.description('创建测试目录，供初始化页面测试')
-	.alias('p')
+	.alias('t')
 	.action(() => {
 		require('../command/temp')()
 	})

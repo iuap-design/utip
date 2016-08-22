@@ -8,10 +8,40 @@
 $ npm install -g utip
 ```
 
+### 执行环境
+
+安装后，在仓库的根目录执行以下命令，如`utip build`
+
+### 构建思路
+
+utip通过执行`utip build`，会在当前目录下执行以下操作：
+
+1. **初始化**：判断完整的依赖仓库是否已经存在于当前目录。如未存在，则通过`git clone`依次下载各仓库，并自动执行`npm install`安装各仓库的依赖包
+
+   > 各仓库依赖关系，可以[查看这里](https://github.com/iuap-design/blog/blob/master/iuapdesign%E9%87%8D%E6%9E%84%E7%9B%AE%E5%BD%95%26%E8%A7%84%E5%88%92.md#输出测试流程)
+
+2. **更新**：拉取最新分支内容，如各仓库已存在于当前目录，自动执行`git pull`并拉取`release`分支的更新到本地
+
+   > 如有冲突，需要手动解决，所以要做好勤提交的习惯
+
+3. **复制源码**：复制各仓库的`js`源码到依赖仓库的`node_modules`对应的仓库中
+
+4. **输出**：在`kero-adapter`仓库中输出最终的`u.js`
+
+`utip build`执行后，可选择执行`utip temp`,实现：
+
+* 空白模板，已导入所有输出文件，方便用于测试。
+
+***
+**`utip publish`**: 非发布人员，请勿使用此功能，会更改`package.json`中的版本号。
+
+* 用于各仓库发布`npm publish`，介绍略。
+
 ### 安装后，可在shell执行以下命令
 
 ```
 $ utip build
+$ utip temp
 $ utip publish
 ```
 
@@ -19,6 +49,7 @@ $ utip publish
 
 ```
 $ utip b
+$ utip t
 $ utip p
 ```
 
@@ -30,6 +61,10 @@ $ utip p
 * 仓库更新：自动获取更新，合并以上项目的`release`分支
 * 复制源码：自动复制所有源码`js`到依赖库`node_modules`中
 * 输出文件：自动在kero-adapter的`dist`目录中生成最新`u.js`文件
+
+**utip temp | utip t**
+
+* 建立空白模板用于测试：完成`utip build`后，可通过执行此命令，获取空白模板用于测试。
 
 **utip publish | utip p**
 
