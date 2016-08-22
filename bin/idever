@@ -20,8 +20,16 @@ program
 	})
 
 program
+	.command('temp')
+	.description('创建测试目录，供初始化页面测试')
+	.alias('p')
+	.action(() => {
+		require('../command/temp')()
+	})
+
+program
 	.command('publish')
-	.description('各仓库在npm发包-功能开发中')
+	.description('各仓库在npm发包，有发包权限的管理者使用前请查看文档')
 	.alias('p')
 	.action(() => {
 		require('../command/publish')()
