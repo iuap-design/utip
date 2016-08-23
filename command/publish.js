@@ -10,7 +10,9 @@ const frameDir = [
 	'sparrow',
 	'neoui',
 	'kero',
-	'kero-adapter'
+	'kero-adapter',
+	'neoui-grid',
+	'neoui-tree'
 ];
 
 const dirs = fs.readdirSync(envPath); // 输出当前目录下的目录名
@@ -89,9 +91,33 @@ module.exports = function() {
 					      process.exit()
 					    })
 						break;
-					default:
+					case 'kero-adapter':
 						console.log('kero-adapter read')
 						command = `cd ${resPath} && npm uninstall neoui-sparrow neoui kero && npm install neoui-sparrow@${newSparrow} kero@${newKero} neoui@${newNeoui} --save && npm run product && npm publish && cd ..`;
+						execSync(command, (error, stdout, stderr) => {
+					      if (error) {
+					        console.log(error)
+					        process.exit()
+					      }
+					      console.log(chalk.green('\n √ 正在测试发包'))
+					      process.exit()
+					    })
+					    break;
+					case 'neoui-grid':
+						console.log('neoui-grid read')
+						command = `cd ${resPath} && npm run product && npm publish && cd ..`;
+						execSync(command, (error, stdout, stderr) => {
+					      if (error) {
+					        console.log(error)
+					        process.exit()
+					      }
+					      console.log(chalk.green('\n √ 正在测试发包'))
+					      process.exit()
+					    })
+					    break;
+					default:
+						console.log('neoui-tree read')
+						command = `cd ${resPath} && npm run product && npm publish && cd ..`;
 						execSync(command, (error, stdout, stderr) => {
 					      if (error) {
 					        console.log(error)

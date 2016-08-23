@@ -51,6 +51,8 @@ module.exports = () => {
 					'<!-- iuap design style start-->',
 					'<link rel="stylesheet" type="text/css" href="./css/font-awesome.css">',
 					'<link rel="stylesheet" type="text/css" href="./css/u.css">',
+					'<link rel="stylesheet" type="text/css" href="./css/grid.css">',
+					'<link rel="stylesheet" type="text/css" href="./css/tree.css">',
 					'<!-- iuap design style end-->',
 					'<style type="text/css">',
 					'html, body {',
@@ -93,6 +95,8 @@ module.exports = () => {
 					'<script src="http://design.yyuap.com/static/jquery/jquery-1.9.1.min.js"></script>',
 					'<!-- iuap desigin js start-->',
 					'<script src="./js/u.js"></script>',
+					'<script src="./js/u-grid.js"></script>',
+					'<script src="./js/u-tree.js"></script>',
 					'<!-- iuap desigin js end-->',
 					'</body>',
 					'</html>'].join("\n");

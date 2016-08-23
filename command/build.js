@@ -10,7 +10,15 @@ const frameDir = [
 	'sparrow',
 	'neoui',
 	'kero',
-	'kero-adapter'
+	'kero-adapter',
+	'neoui-grid',
+	'neoui-tree'
+];
+
+// gtree仓库
+const gtreeDir = [
+	'neoui-grid',
+	'neoui-tree'
 ];
 
 // npm包名
@@ -29,11 +37,11 @@ module.exports = () => {
 			this.whole();
 			console.log(chalk.green(`\n √ 仓库已clone更新，准备生成u.css`));
 
-			// this.del();
-			// console.log(chalk.green(`\n √ 删除dist目录,准备重新输出`));
-
 			this.ucss();
-			console.log(chalk.green(`\n √ neoui已输出u.css,准备复制js源码`));
+			console.log(chalk.green(`\n √ neoui已输出复制css&fonts&images`));
+
+			this.gtree();
+			console.log(chalk.green(`\n √ grid,tree已输出复制dist目录`));
 
 			for(var i=0; i<npmDir.length; i++){
 				this.copy(npmDir[i]);
@@ -130,14 +138,11 @@ module.exports = () => {
 								  } else {
 								  	fse.copySync(envPath + '/' + copyname + '/js', _path +'/'+ copyname +'/js')
 								  }
-								  
-								  // console.log('完成' + _path +'/'+ copyname +'/js' + "复制，success!")
 								} catch (err) {
 								  console.error(err)
 								}
 							});
 							var nextModAry = [nextMod];
-							// console.log(nextModAry)
 							loopFun(nextModAry);
 						} else {
 							// 不存在
@@ -170,6 +175,20 @@ module.exports = () => {
 
 				fse.copySync(`${neoDir}${neoAry[i]}`, `${neoModuleDir}${neoAry[i]}`);
 			}
+		},
+
+		/**
+		 * grid,tree输出复制到kero-adapter/node_modules/grid/dist
+		 */
+		gtree: function(){
+			gtreeDir.forEach(function(name){
+				var treeCMD = `cd ./${name} && npm run product && cd ..`;
+				execSync(treeCMD);
+				var treeDist = `./${name}/dist`;
+				var treeModuleDist = `./kero-adapter/node_modules/${name}/dist`;
+				fse.copySync(`${treeDist}`, `${treeModuleDist}`);
+			});
+
 		},
 
 		/**
