@@ -27,14 +27,23 @@ module.exports = () => {
 	var buildFun = {
 		init: function() {
 			this.whole();
-			console.log(chalk.green(`\n √ 仓库已clone更新，准备复制源码`));
+			console.log(chalk.green(`\n √ 仓库已clone更新，准备生成u.css`));
+
+			// this.del();
+			// console.log(chalk.green(`\n √ 删除dist目录,准备重新输出`));
+
+			this.ucss();
+			console.log(chalk.green(`\n √ neoui已输出u.css,准备复制js源码`));
 
 			for(var i=0; i<npmDir.length; i++){
 				this.copy(npmDir[i]);
 			}
 			console.log(chalk.green(`\n √ 复制已完成,准备输出dist目录`));
+
 			this.dist();
-			console.log(chalk.green(`\n √ 完成：已输出u.js`));
+			console.log(chalk.green(`\n √ 完成：kero-adapter已输出最新dist目录`));
+			
+			
 		},
 
 		iswhole: false,
@@ -80,6 +89,16 @@ module.exports = () => {
 			// git@github.com:iuap-design/kero.git
 			// git@github.com:iuap-design/neoui.git
 		},
+
+		/**
+		 * 删除neoui & kero-adapter仓库的输出文件
+		 * 删除目前会引发neoui的npm run product错误
+		 */
+		// del: function() {
+		// 	fse.emptyDirSync('./neoui/dist');
+		// 	fse.emptyDirSync('./kero-adapter/node_modules/neoui/dist');
+		// 	fse.emptyDirSync('./kero-adapter/dist');
+		// },
 
 		/**
 		 * 复制拷贝各仓库js文件到kero-adapter下
@@ -129,6 +148,28 @@ module.exports = () => {
 			};
 
 			loopFun(paths);
+		},
+
+		/**
+		 * neoui仓库增加输出u.css并复制到kero-adapter/node_modules/neoui/dist中
+		 */
+		ucss: function(){
+			const uiDir = envPath + '/neoui';
+			const cssCMD = `cd ${uiDir} && npm run product && cd ..`;
+			execSync(cssCMD);
+			const neoDir = './neoui/dist/';
+			const neoModuleDir = './kero-adapter/node_modules/neoui/dist/';
+			const neoAry = ['css', 'fonts', 'images'];
+
+			for(var i=0; i<neoAry.length; i++){
+				var dirExist = fse.ensureDirSync(`${neoModuleDir}${neoAry[i]}`);
+				if(! dirExist) {
+					console.log(`创建kero-adapter依赖模块neoui的输出目录dist/${neoAry[i]}`);
+					fse.mkdirsSync(`${neoModuleDir}${neoAry[i]}`);
+				}
+
+				fse.copySync(`${neoDir}${neoAry[i]}`, `${neoModuleDir}${neoAry[i]}`);
+			}
 		},
 
 		/**
