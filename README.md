@@ -24,13 +24,15 @@ utip通过执行`utip build`，会在当前目录下执行以下操作：
 
    > 如有冲突，需要手动解决，所以要做好勤提交的习惯
 
-3. **css输出拷贝**：neoui仓库执行`npm run product`输出`u.css`，并复制到`kero-adapter/node_modules/neoui/dist`文件中，用于最后的输出时获取
+3. **neoui输出\拷贝**：neoui仓库执行`npm run product`输出`u.css`，并复制到`kero-adapter/node_modules/neoui/dist`文件中，用于最后的输出时获取
 
-4. **js源码拷贝**：复制各仓库的`js`源码到依赖仓库的`node_modules`对应的仓库中
+4. **grid/tree输出\拷贝**：grid/tree仓库输出并拷贝到adapter相应依赖库的dist目录下
 
-5. **输出**：在`kero-adapter`仓库中输出最终的`u.js`
+5. **js源码拷贝**：复制各仓库的`js`源码到依赖仓库的`node_modules`对应的仓库中
 
-6. `utip build`执行后，可选择执行`utip temp`,实现创建空白模板文件夹：
+6. **最终输出**：在`kero-adapter`仓库中输出最终的`u.js`
+
+7. `utip build`执行后，可选择执行`utip temp`,实现创建空白模板文件夹：
 
    空白模板:已导入所有输出文件，方便用于测试。
 
