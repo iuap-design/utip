@@ -80,6 +80,7 @@ module.exports = function() {
 						newPoly = newVersion;
 						command = `cd ${resPath} && npm run product && npm publish && git add . && git commit -m 'npm publish' && git push origin release && cd ..`;
 						execSync(command);
+						break;
 					default:
 						command = `cd ${resPath} && npm uninstall neoui-sparrow neoui kero neoui-grid neoui-tree neoui-polyfill && npm install neoui-sparrow@${newSparrow} kero@${newKero} neoui@${newNeoui} neoui-grid@${newGrid} neoui-tree@${newTree} neoui-polyfill@${newPoly} --save && npm run product && npm publish && git add . && git commit -m 'npm publish' && git push origin release && cd ..`;
 						execSync(command);
