@@ -53,35 +53,35 @@ module.exports = function() {
 				switch (resname){
 					case 'sparrow':
 						newSparrow = newVersion;
-						command = `cd ${resPath} && npm run product && npm publish && cd ..`;
+						command = `cd ${resPath} && npm run product && npm publish && git add . && git commit -m 'npm publish' && git push origin release && cd ..`;
 						execSync(command);
 						break;
 					case 'neoui':
 						newNeoui = newVersion;
-						command = `cd ${resPath} && npm uninstall neoui-sparrow && npm install neoui-sparrow@${newSparrow} --save && npm run product && npm publish && cd ..`;
+						command = `cd ${resPath} && npm uninstall neoui-sparrow && npm install neoui-sparrow@${newSparrow} --save && npm run product && npm publish && git add . && git commit -m 'npm publish' && git push origin release && cd ..`;
 						execSync(command);
 						break;
 					case 'kero':
 						newKero = newVersion;
-						command = `cd ${resPath} && npm uninstall neoui-sparrow && npm install neoui-sparrow@${newSparrow} --save && npm run product && npm publish && cd ..`;
+						command = `cd ${resPath} && npm uninstall neoui-sparrow && npm install neoui-sparrow@${newSparrow} --save && npm run product && npm publish && git add . && git commit -m 'npm publish' && git push origin release && cd ..`;
 						execSync(command);
 						break;
 					case 'neoui-grid':
 						newGrid = newVersion;
-						command = `cd ${resPath} && npm run product && npm publish && cd ..`;
+						command = `cd ${resPath} && npm run product && npm publish && git add . && git commit -m 'npm publish' && git push origin release && cd ..`;
 						execSync(command);
 					    break;
 					case 'neoui-tree':
 						newTree = newVersion;
-						command = `cd ${resPath} && npm run product && npm publish && cd ..`;
+						command = `cd ${resPath} && npm run product && npm publish && git add . && git commit -m 'npm publish' && git push origin release && cd ..`;
 						execSync(command);
 						break;
 					case 'neoui-polyfill':
 						newPoly = newVersion;
-						command = `cd ${resPath} && npm run product && npm publish && cd ..`;
+						command = `cd ${resPath} && npm run product && npm publish && git add . && git commit -m 'npm publish' && git push origin release && cd ..`;
 						execSync(command);
 					default:
-						command = `cd ${resPath} && npm uninstall neoui-sparrow neoui kero neoui-grid neoui-tree neoui-polyfill && npm install neoui-sparrow@${newSparrow} kero@${newKero} neoui@${newNeoui} neoui-grid@${newGrid} neoui-tree@${newTree} neoui-polyfill@{newPoly} --save && npm run product && npm publish && cd ..`;
+						command = `cd ${resPath} && npm uninstall neoui-sparrow neoui kero neoui-grid neoui-tree neoui-polyfill && npm install neoui-sparrow@${newSparrow} kero@${newKero} neoui@${newNeoui} neoui-grid@${newGrid} neoui-tree@${newTree} neoui-polyfill@{newPoly} --save && npm run product && npm publish && git add . && git commit -m 'npm publish' && git push origin release && cd ..`;
 						execSync(command);
 				}
 			});
