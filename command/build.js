@@ -5,29 +5,32 @@ const chalk = require('chalk');
 const fse = require('fs-extra');
 const path = require('path');
 
-// 仓库名
+// 仓库名-用于克隆或者更新仓库
 const frameDir = [
 	'sparrow',
 	'neoui',
 	'kero',
 	'kero-adapter',
 	'neoui-grid',
-	'neoui-tree'
+	'neoui-tree',
+	'neoui-polyfill'
 ];
 
-// gtree仓库
+// gtree仓库-输出迁移目录至kero-adapter 
 const gtreeDir = [
 	'neoui-grid',
-	'neoui-tree'
+	'neoui-tree',
+	'neoui-polyfill'
 ];
 
-// npm包名
+// npm包名-kero-adapter js依赖
 const npmDir = [ 
 	'neoui-sparrow',
 	'neoui',
 	'kero',
 	'kero-adapter'	
 ];
+
 const dirs = fs.readdirSync(envPath); // 输出当前目录下的目录名
 
 module.exports = () => {
@@ -51,10 +54,7 @@ module.exports = () => {
 			this.dist();
 			console.log(chalk.green(`\n √ 完成：kero-adapter已输出最新dist目录`));
 			
-			
 		},
-
-		iswhole: false,
 
 		/**
 		 * 判断依赖库是否下载完成
@@ -89,8 +89,6 @@ module.exports = () => {
 				    })
 				}
 			});
-
-			this.iswhole = true;
 
 			// git@github.com:iuap-design/sparrow.git
 			// git@github.com:iuap-design/kero-adapter.git

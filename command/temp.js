@@ -23,9 +23,9 @@ module.exports = () => {
 		 * 查找usketch目录
 		 */
 		sketch: function() {
-			var tplName = 'utest';
+			var tplName = 'uapp';
 			co(function *() {
-				let inputName = yield prompt('测试文件夹名称(如输入为空会在本地创建"utest"):');
+				let inputName = yield prompt('测试文件夹名称(如输入为空会在本地创建"uapp"):');
 				if(inputName != ''){
 					tplName = inputName;
 				}
@@ -54,6 +54,9 @@ module.exports = () => {
 					'<link rel="stylesheet" type="text/css" href="./css/grid.css">',
 					'<link rel="stylesheet" type="text/css" href="./css/tree.css">',
 					'<!-- iuap design style end-->',
+					'<!--[if lte IE 8 ]>',
+					'<script src="//design.yyuap.com/static/uui/latest/js/u-polyfill.js"></script>',
+					'<![endif]-->',
 					'<style type="text/css">',
 					'html, body {',
 					'	height: 100%;',

@@ -12,6 +12,7 @@ const frameDir = [
 	'kero',
 	'neoui-grid',
 	'neoui-tree',
+	'neoui-polyfill',
 	'kero-adapter'
 ];
 
@@ -28,12 +29,13 @@ module.exports = function() {
 		 * 更改各仓库package.json文件,并提交
 		 */
 		pkg: function() {
-			var newSparrow,newNeoui,newKero,newGrid,newTree;
+			var newSparrow,newNeoui,newKero,newGrid,newTree,newPoly;
 			frameDir.forEach(function(resname){
 				var originVersion = require(envPath+ '/' + resname + '/package.json').version.split('.');
+				console.log(`${resname}老版本为${originVersion}`);
 				originVersion[originVersion.length-1]++;
 				var newVersion = originVersion.join('.');
-				console.log(newVersion);
+				console.log(`${resname}准备更新的版本为${newVersion}`);
 				
 				// 读取写入替换内容-按时取消write
 				var readData = fs.readFileSync(envPath+ '/' + resname + '/package.json', 'utf-8');
@@ -44,44 +46,42 @@ module.exports = function() {
 				// 执行路径
 				var resPath = envPath+ '/' + resname;
 				var command;
-				console.log(resPath);
-
+				// console.log(resPath);
 
 				// 更改依赖
+				console.log(`${resname} 执行输出发包`);
 				switch (resname){
 					case 'sparrow':
-						console.log('sparrow read');
 						newSparrow = newVersion;
 						command = `cd ${resPath} && npm run product && npm publish && cd ..`;
 						execSync(command);
 						break;
 					case 'neoui':
-						console.log(`${resname} read`);
 						newNeoui = newVersion;
 						command = `cd ${resPath} && npm uninstall neoui-sparrow && npm install neoui-sparrow@${newSparrow} --save && npm run product && npm publish && cd ..`;
 						execSync(command);
 						break;
 					case 'kero':
-						console.log(`${resname} read`);
 						newKero = newVersion;
 						command = `cd ${resPath} && npm uninstall neoui-sparrow && npm install neoui-sparrow@${newSparrow} --save && npm run product && npm publish && cd ..`;
 						execSync(command);
 						break;
 					case 'neoui-grid':
-						console.log('neoui-grid read');
 						newGrid = newVersion;
 						command = `cd ${resPath} && npm run product && npm publish && cd ..`;
 						execSync(command);
 					    break;
 					case 'neoui-tree':
-						console.log('neoui-tree read');
 						newTree = newVersion;
 						command = `cd ${resPath} && npm run product && npm publish && cd ..`;
 						execSync(command);
 						break;
+					case 'neoui-polyfill':
+						newPoly = newVersion;
+						command = `cd ${resPath} && npm run product && npm publish && cd ..`;
+						execSync(command);
 					default:
-						console.log('kero-adapter read');
-						command = `cd ${resPath} && npm uninstall neoui-sparrow neoui kero neoui-grid neoui-tree && npm install neoui-sparrow@${newSparrow} kero@${newKero} neoui@${newNeoui} neoui-grid@${newGrid} neoui-tree@${newTree} --save && npm run product && npm publish && cd ..`;
+						command = `cd ${resPath} && npm uninstall neoui-sparrow neoui kero neoui-grid neoui-tree neoui-polyfill && npm install neoui-sparrow@${newSparrow} kero@${newKero} neoui@${newNeoui} neoui-grid@${newGrid} neoui-tree@${newTree} neoui-polyfill@{newPoly} --save && npm run product && npm publish && cd ..`;
 						execSync(command);
 				}
 			});

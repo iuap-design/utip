@@ -13,7 +13,7 @@ program
 
 program
 	.command('build')
-	.description('修改原始文件，输出最终u.js')
+	.description('修改原始文件kero-adapter输出最终框架,测试无误务必提交仓库代码')
 	.alias('b')
 	.action(() => {
 		require('../command/build')()
@@ -21,16 +21,15 @@ program
 
 program
 	.command('temp')
-	.description('创建测试目录，供初始化页面测试')
+	.description('执行build后，创建空页面模板')
 	.alias('t')
 	.action(() => {
 		require('../command/temp')()
 	})
 
 program
-	.command('publish')
-	.description('各仓库在npm发包，有发包权限的管理者使用前请查看文档')
-	.alias('p')
+	.command('pppppublish')
+	.description('各仓库发包:发包有风险,执行需谨慎,发包后务必提交仓库代码')
 	.action(() => {
 		require('../command/publish')()
 	})

@@ -26,7 +26,7 @@ utip通过执行`utip build`，会在当前目录下执行以下操作：
 
 3. **neoui输出\拷贝**：neoui仓库执行`npm run product`输出`u.css`，并复制到`kero-adapter/node_modules/neoui/dist`文件中，用于最后的输出时获取
 
-4. **grid/tree输出\拷贝**：grid/tree仓库输出并拷贝到adapter相应依赖库的dist目录下
+4. **grid/tree/polyfill输出\拷贝**：grid/tree/polyfill仓库输出并拷贝到adapter相应依赖库的dist目录下
 
 5. **js源码拷贝**：复制各仓库的`js`源码到依赖仓库的`node_modules`对应的仓库中
 
