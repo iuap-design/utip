@@ -44,12 +44,12 @@ module.exports = () => {
 			console.log(chalk.green(`\n √ neoui已输出复制css&fonts&images`));
 
 			this.gtree();
-			console.log(chalk.green(`\n √ grid,tree已输出复制dist目录`));
+			console.log(chalk.green(`\n √ grid,tree,polyfill已输出复制dist目录`));
 
 			for(var i=0; i<npmDir.length; i++){
 				this.copy(npmDir[i]);
 			}
-			console.log(chalk.green(`\n √ 复制已完成,准备输出dist目录`));
+			console.log(chalk.green(`\n √ js源码复制已完成,准备输出dist目录`));
 
 			this.dist();
 			console.log(chalk.green(`\n √ 完成：kero-adapter已输出最新dist目录`));
@@ -65,7 +65,7 @@ module.exports = () => {
 			// console.log(dirs);
 			frameDir.forEach(function(name){
 				if(dirs.indexOf(name) == -1){
-					console.log(name + '正在从远程仓库克隆');
+					console.log(name + '正在从远程仓库克隆&cnpm下载依赖');
 					var resUrl = `git@github.com:iuap-design/${name}.git`;
 					console.log(resUrl);
 					var cloneCMD = `git clone git@github.com:iuap-design/${name}.git && cd ${name} && git checkout release && git pull origin release && cnpm install && cd ..`;
