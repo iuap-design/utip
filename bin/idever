@@ -9,14 +9,15 @@ program
 	.version(require('../package').version )
 
 program
-	.usage('<command>')
+	.usage('<command> [options] <mode>')
 
 program
 	.command('build')
-	.description('修改原始文件kero-adapter输出最终框架,测试无误务必提交仓库代码')
 	.alias('b')
-	.action(() => {
-		require('../command/build')()
+	.option('-m, --mode <mode>', '取消更新各个仓库')
+	.description('输出最终目录，可设置参数是否需要更新各仓库')
+	.action((options) => {
+		require('../command/build')(options)
 	})
 
 program
@@ -29,7 +30,7 @@ program
 
 program
 	.command('pppppublish')
-	.description('各仓库发包:发包有风险,执行需谨慎,发包后务必提交仓库代码')
+	.description('各仓库发包:发包有风险,执行需谨慎')
 	.action(() => {
 		require('../command/publish')()
 	})

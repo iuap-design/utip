@@ -17,7 +17,7 @@ $ npm install -g utip
 ### 执行命令
 
 ```
-$ utip build
+$ utip build [-mode local] //[]内为可选参数
 $ utip temp
 $ utip pppppublish
 ```
@@ -25,7 +25,7 @@ $ utip pppppublish
 ### 简化命令
 
 ```
-$ utip b
+$ utip b [-m local]
 $ utip t
 ```
 
@@ -34,6 +34,12 @@ $ utip t
 ### 操作说明
 
 1. **utip build | utip b**
+
+   参数设置
+
+   `utip build`默认拉取各仓库更新，适用于提交前测试整体兼容
+
+   `utip build -mode local`可取消拉取各仓库更新，适用于本地测试bug
 
 * 初始化：如本地目录未下载完整仓库，会拉取仓库到本地
 * 仓库更新：自动获取更新，合并以上项目的`release`分支

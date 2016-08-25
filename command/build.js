@@ -33,8 +33,9 @@ const npmDir = [
 
 const dirs = fs.readdirSync(envPath); // 输出当前目录下的目录名
 
-module.exports = () => {
-	
+module.exports = (options) => {
+	var inputConfig = options;
+
 	var buildFun = {
 		init: function() {
 			this.whole();
@@ -77,6 +78,10 @@ module.exports = () => {
 				      console.log(chalk.green(`\n √ 已clone ${name}仓库`))
 				      process.exit()
 				    })
+				}
+				
+				if(inputConfig.mode == 'local'){
+					return;
 				} else {
 					var cloneCMD = `cd ${name} && git checkout release && git pull origin release && cd ..`;
 					execSync(cloneCMD, (error, stdout, stderr) => {
