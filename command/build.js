@@ -163,7 +163,8 @@ module.exports = (options) => {
 		 */
 		ucss: function(){
 			const uiDir = envPath + '/neoui';
-			const cssCMD = `cd ${uiDir} && npm run product && cd ..`;
+			// 优化：替换npm run product
+			const cssCMD = `cd ${uiDir} && webpack --progress --colors --mode=product_normal && gulp dist && cd ..`;
 			execSync(cssCMD);
 			const neoDir = './neoui/dist/';
 			const neoModuleDir = './kero-adapter/node_modules/neoui/dist/';
@@ -185,6 +186,7 @@ module.exports = (options) => {
 		 */
 		gtree: function(){
 			gtreeDir.forEach(function(name){
+				// 优化npm run product
 				var treeCMD = `cd ./${name} && npm run product && cd ..`;
 				execSync(treeCMD);
 				var treeDist = `./${name}/dist`;
@@ -199,7 +201,7 @@ module.exports = (options) => {
 		 */
 		dist: function(){
 			var adapterPath = envPath + "/kero-adapter";
-			var command = `cd ${adapterPath} && npm run product`;
+			var command = `cd ${adapterPath} && webpack --colors --progress && gulp dist`;
 			execSync(command, (error, stdout, stderr) => {
 		      if (error) {
 		        console.log(error)
