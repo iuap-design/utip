@@ -2,6 +2,10 @@
 
 用于重构后项目修改测试，及自动发包，提交仓库功能
 
+### 1.3.0说明
+
+* 优化neoui,keri-adapter webpack命令，本地`build`取消web pack的 min.js输出
+
 ### 安装
 
 ```
