@@ -4,7 +4,9 @@
 
 ### 1.3.0说明
 
-* 优化neoui,keri-adapter webpack命令，本地`build`取消web pack的 min.js输出
+* 优化`utip build`输出，取消`neoui`、`kero-adapter`仓库`*.min.js`输出，**减少执行时间**
+
+  > 如需输出完整目录，在kero-adapter仓库手动执行npm run product
 
 ### 安装
 
