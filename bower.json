@@ -2,6 +2,7 @@
   "name": "utip",
   "description": "项目自动化构建输出 & npm发包",
   "main": "index.js",
+  "version":"1.3.0",
   "authors": [
     "onvno <leewei2020@126.com>"
   ],
