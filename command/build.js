@@ -40,6 +40,12 @@ module.exports = (options) => {
 		init: function() {
 			this.whole();
 			console.log(chalk.green(`\n √ 仓库已clone更新，准备生成u.css`));
+			
+			fse.emptyDirSync('./neoui/dist');
+			fse.emptyDirSync('./neoui-grid/dist');
+			fse.emptyDirSync('./neoui-tree/dist');
+			fse.emptyDirSync('./kero-adapter/dist');
+			
 
 			this.ucss();
 			console.log(chalk.green(`\n √ neoui已输出复制css&fonts&images`));
