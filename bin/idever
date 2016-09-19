@@ -35,6 +35,15 @@ program
 		require('../command/publish')()
 	})
 
+program
+	.command('checkout')
+	.description('还原dist输出目录')
+	.alias('co')
+	.action(() => {
+		require('../command/check')()
+	})
+
+
 program.parse(process.argv)
 
 if(!program.args.length){
