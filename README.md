@@ -2,6 +2,16 @@
 
 用于重构后项目修改测试，及自动发包，提交仓库功能
 
+### 1.3.1说明
+
+* bug修改：
+
+  utip build增加dist目录更新，避免因命名更改生成冗余文件
+
+* add新增命令
+
+  utip checkout:还原dist目录，用于本地或者测试环境，避免之前二次执行`utip build`冲突
+
 ### 1.3.0说明
 
 * 优化`utip build`输出，取消`neoui`、`kero-adapter`仓库`*.min.js`输出，**减少执行时间**
@@ -24,6 +34,7 @@ $ npm install -g utip
 
 ```
 $ utip build [-mode local] //[]内为可选参数
+$ utip checkout
 $ utip temp
 $ utip pppppublish
 ```
@@ -32,6 +43,7 @@ $ utip pppppublish
 
 ```
 $ utip b [-m local]
+$ utip co
 $ utip t
 ```
 
