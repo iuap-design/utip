@@ -4,26 +4,12 @@
 
 ### 待更新内容
 
-* 目前`utip build`任务中，复制源码存在以下两问题：
-  * 遍历完整目录，需要增加筛选条件（博宇反馈）
-  * 复制源码未做限制，需要增加条件
 * window系统下执行`utip build --mode local`不能正常执行(王皓反馈)
 
-### 1.3.1说明
+### 注意事项
 
-* bug修改：
-
-  utip build增加dist目录更新，避免因命名更改生成冗余文件
-
-* add新增命令
-
-  utip checkout:还原dist目录，用于本地或者测试环境，避免之前二次执行`utip build`冲突
-
-### 1.3.0说明
-
-* 优化`utip build`输出，取消`neoui`、`kero-adapter`仓库`*.min.js`输出，**减少执行时间**
-
-  > 如需输出完整目录，在kero-adapter仓库手动执行npm run product
+- 执行`utip build`，使用了`cnpm install`来下载依赖包，需要全局安装`cnpm`
+- `utip build`只支持`npm 3.x`平行依赖的源码复制，请检查更新`npm`版本
 
 ### 安装
 
@@ -120,6 +106,34 @@ utip通过执行`utip build`，会在当前目录下执行以下操作：
 - 用于各仓库发布`npm publish`，介绍略。
 
 
-### 注意事项
 
-* 执行`tip build`，使用了`cnpm install`来下载依赖包
+
+## CHANGELOG
+
+### 1.3.2
+
+- 优化
+
+  `utip-build`复制调整，调整后：
+
+  - 不再支持`npm 2.x`版本的层级依赖，目前支持`npm 3.x`平行依赖
+
+
+  - 不再遍历完整目录
+  - 不再重复生成冗余依赖目录（此部分之前会造成webpack执行警告，建议重新npm install一次依赖关系）
+
+### 1.3.1
+
+- bug修改：
+
+  utip build增加dist目录更新，避免因命名更改生成冗余文件
+
+- add新增命令
+
+  utip checkout:还原dist目录，用于本地或者测试环境，避免之前二次执行`utip build`冲突
+
+### 1.3.0
+
+- 优化`utip build`输出，取消`neoui`、`kero-adapter`仓库`*.min.js`输出，**减少执行时间**
+
+  > 如需输出完整目录，在kero-adapter仓库手动执行npm run product
