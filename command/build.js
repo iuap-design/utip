@@ -5,6 +5,7 @@ const chalk = require('chalk');
 const fse = require('fs-extra');
 const path = require('path');
 
+
 // 仓库名-用于克隆或者更新仓库
 const frameDir = [
 	'sparrow',
@@ -27,9 +28,14 @@ const gtreeDir = [
 const npmDir = [ 
 	'neoui-sparrow',
 	'neoui',
-	'kero',
-	'kero-adapter'	
+	'kero'
 ];
+
+const rootList = {
+	"neoui-sparrow":["neoui", "kero", "kero-adapter"],
+	"neoui":["kero-adapter"],
+	"kero":["kero-adapter"]
+};
 
 const dirs = fs.readdirSync(envPath); // 输出当前目录下的目录名
 
@@ -39,24 +45,25 @@ module.exports = (options) => {
 	var buildFun = {
 		init: function() {
 			this.whole();
-			console.log(chalk.green(`\n √ 仓库已clone更新，准备生成u.css`));
+			console.log(chalk.green(`\n √ 已clone更新各仓库，准备清空dist目录`));
 			
 			fse.emptyDirSync('./neoui/dist');
 			fse.emptyDirSync('./neoui-grid/dist');
 			fse.emptyDirSync('./neoui-tree/dist');
 			fse.emptyDirSync('./kero-adapter/dist');
+			console.log(chalk.green(`\n √ 已清空dist目录，准备执行neoui输出`));
 			
 
 			this.ucss();
-			console.log(chalk.green(`\n √ neoui已输出复制css&fonts&images`));
+			console.log(chalk.green(`\n √ 已执行输出neoui，完成样式&静态资源拷贝`));
 
 			this.gtree();
-			console.log(chalk.green(`\n √ grid,tree,polyfill已输出复制dist目录`));
+			console.log(chalk.green(`\n √ 已执行输出grid,tree,polyfill,完成拷贝`));
 
 			for(var i=0; i<npmDir.length; i++){
 				this.copy(npmDir[i]);
 			}
-			console.log(chalk.green(`\n √ js源码复制已完成,准备输出dist目录`));
+			console.log(chalk.green(`\n √ 已复制源码,准备输出最终目录`));
 
 			this.dist();
 			console.log(chalk.green(`\n √ 完成：kero-adapter已输出最新dist目录`));
@@ -108,45 +115,38 @@ module.exports = (options) => {
 		},
 
 		/**
-		 * 删除neoui & kero-adapter仓库的输出文件
-		 * 删除目前会引发neoui的npm run product错误
-		 */
-		// del: function() {
-		// 	fse.emptyDirSync('./neoui/dist');
-		// 	fse.emptyDirSync('./kero-adapter/node_modules/neoui/dist');
-		// 	fse.emptyDirSync('./kero-adapter/dist');
-		// },
-
-		/**
 		 * 复制拷贝各仓库js文件到kero-adapter下
 		 */
 		copy: function(copyname){
+			// 未优化前:所有根目录下仓库都会遍历拷贝
+			/*
 			var paths = fs.readdirSync(envPath);
-
 			var loopFun = function(paths) {
 
 				paths.forEach(function(path){
 					// 此处路径不能使用__dirname,会指向插件的路径
 					var _path = envPath + '/' + path + '/node_modules';
 					var nextMod = path + '/node_modules';
-					// console.log(_path);
+					
 
 					// 判断子集nodemodules是否存在
 					if(fs.existsSync(_path)){
 
 						var st = fs.statSync(_path);
-						
+
 						if(st.isDirectory()){
 							// 存在
 							var subpaths = fs.readdirSync(_path);
 							subpaths.forEach(function(subpath) {
 								// console.log(subpath);
 								try {
-								  if(copyname == 'neoui-sparrow'){
-								  	fse.copySync(envPath + '/' + 'sparrow' + '/js', _path +'/'+ copyname +'/js')
-								  } else {
-								  	fse.copySync(envPath + '/' + copyname + '/js', _path +'/'+ copyname +'/js')
-								  }
+
+									// 未优化
+								  	if(copyname == 'neoui-sparrow'){
+								  		fse.copySync(envPath + '/' + 'sparrow' + '/js', _path +'/'+ copyname +'/js')
+								  	} else {
+								  		fse.copySync(envPath + '/' + copyname + '/js', _path +'/'+ copyname +'/js')
+								  	}
 								} catch (err) {
 								  console.error(err)
 								}
@@ -160,8 +160,28 @@ module.exports = (options) => {
 						
 				});
 			};
-
 			loopFun(paths);
+			*/
+
+			// 调整后
+			// 优化筛选，方便后期维护，使用switch.case
+			switch(copyname){
+				case "neoui-sparrow":
+					rootList["neoui-sparrow"].forEach( function(element, index) {
+						fse.copySync(envPath + '/sparrow/js', envPath +'/'+ element +'/node_modules/neoui-sparrow/js');
+					});
+					break;
+				case "neoui":
+					rootList["neoui"].forEach( function(element, index) {
+						fse.copySync(envPath + '/neoui/js', envPath +'/'+ element +'/node_modules/neoui/js');
+					});
+					break;
+				case "kero":
+					rootList["kero"].forEach( function(element, index) {
+						fse.copySync(envPath + '/kero/js', envPath +'/'+ element +'/node_modules/kero/js');
+					});
+					break;
+			}
 		},
 
 		/**
