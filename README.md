@@ -118,10 +118,9 @@ utip通过执行`utip build`，会在当前目录下执行以下操作：
   `utip-build`复制调整，调整后：
 
   - 不再支持`npm 2.x`版本的层级依赖，目前支持`npm 3.x`平行依赖
+  - 不再遍历完整目录
+  - 不再重复生成冗余依赖目录（此部分之前会造成webpack执行警告，建议删除node_modules，重新npm install一次依赖关系）
 
-
-- 不再遍历完整目录
-- 不再重复生成冗余依赖目录（此部分之前会造成webpack执行警告，建议删除node_modules，重新npm install一次依赖关系）
 
 ### 1.3.1
 
