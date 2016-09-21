@@ -37,10 +37,18 @@ program
 
 program
 	.command('checkout')
-	.description('还原dist输出目录')
+	.description('还原所有文件（包含dist）修改')
 	.alias('co')
 	.action(() => {
 		require('../command/check')()
+	})
+
+program
+	.command('checkdist')
+	.description('还原dist输出目录')
+	.alias('cd')
+	.action(() => {
+		require('../command/checkdist')()
 	})
 
 

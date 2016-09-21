@@ -29,6 +29,7 @@ $ npm install -g utip
 ```
 $ utip build [--mode local] //[]内为可选参数
 $ utip checkout
+$ utip checkdist
 $ utip temp
 $ utip pppppublish
 ```
@@ -38,6 +39,7 @@ $ utip pppppublish
 ```
 $ utip b [-m local]
 $ utip co
+$ utip cd
 $ utip t
 ```
 
@@ -64,6 +66,14 @@ $ utip t
 
 
 * 建立模板文件夹：自动生成空白模板，导入最新输出文件(如u.js等)
+
+3. **utip checkout | utip co**
+
+* 还原所有修改及输出
+
+3. **utip checkdist | utip cd**
+
+* 还原所有输出
 
 3. **utip pppppublish**
 
@@ -110,6 +120,12 @@ utip通过执行`utip build`，会在当前目录下执行以下操作：
 
 
 ## CHANGELOG
+
+### 1.3.3
+
+* 新增
+
+  增加`utip checkdist`命令
 
 ### 1.3.2
 
