@@ -27,7 +27,7 @@ $ npm install -g utip
 ### 执行命令
 
 ```
-$ utip build [-mode local] //[]内为可选参数
+$ utip build [--mode local] //[]内为可选参数
 $ utip checkout
 $ utip temp
 $ utip pppppublish
