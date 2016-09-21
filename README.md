@@ -9,7 +9,8 @@
 ### 注意事项
 
 - 执行`utip build`，使用了`cnpm install`来下载依赖包，需要全局安装`cnpm`
-- `utip build`只支持`npm 3.x`平行依赖的源码复制，请检查更新`npm`版本
+- `utip build`只支持`npm 3.x`平行依赖的源码复制. 
+  * `npm 2.x`升级`npm 3.x`后，删除依赖`node_modules`重新`npm install`即可
 
 ### 安装
 
@@ -119,8 +120,8 @@ utip通过执行`utip build`，会在当前目录下执行以下操作：
   - 不再支持`npm 2.x`版本的层级依赖，目前支持`npm 3.x`平行依赖
 
 
-  - 不再遍历完整目录
-  - 不再重复生成冗余依赖目录（此部分之前会造成webpack执行警告，建议重新npm install一次依赖关系）
+- 不再遍历完整目录
+- 不再重复生成冗余依赖目录（此部分之前会造成webpack执行警告，建议删除node_modules，重新npm install一次依赖关系）
 
 ### 1.3.1
 
