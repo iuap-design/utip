@@ -51,6 +51,13 @@ program
 		require('../command/checkdist')()
 	})
 
+program
+	.command('pull')
+	.description('拉取仓库更新')
+	.alias('pu')
+	.action(() => {
+		require('../command/pull')()
+	})
 
 program.parse(process.argv)
 
