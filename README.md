@@ -27,6 +27,7 @@ $ npm install -g utip
 ### 执行命令
 
 ```
+$ utip pull
 $ utip build [--mode local] //[]内为可选参数
 $ utip checkout
 $ utip checkdist
@@ -37,6 +38,7 @@ $ utip pppppublish
 ### 简化命令
 
 ```
+$ utip pu
 $ utip b [-m local]
 $ utip co
 $ utip cd
@@ -47,35 +49,39 @@ $ utip t
 
 ### 操作说明
 
-1. **utip build | utip b**
+1.**utip pull | utip pu**
 
-   参数设置
+拉取各仓库更新
 
-   `utip build`默认拉取各仓库更新，适用于提交前测试整体兼容
+2.**utip build | utip b**
 
-   `utip build -mode local`可取消拉取各仓库更新，适用于本地测试bug
+参数设置
+
+`utip build`默认拉取各仓库更新，适用于提交前测试整体兼容
+
+`utip build --mode local`可取消拉取各仓库更新，适用于本地测试bug
 
 * 初始化：如本地目录未下载完整仓库，会拉取仓库到本地
 * 仓库更新：自动获取更新，合并以上项目的`release`分支
 * 复制源码：自动复制所有源码及依赖到的相关文件，拷贝到到依赖库`node_modules`中
 * 输出文件：自动在kero-adapter的`dist`目录输出最终的产出文件
 
-2. **utip temp | utip t**
+3.**utip temp | utip t**
 
 * `utip build`后可执行此命令，用于新项目初始化
 
 
 * 建立模板文件夹：自动生成空白模板，导入最新输出文件(如u.js等)
 
-3. **utip checkout | utip co**
+4.**utip checkout | utip co**
 
 * 还原所有修改及输出
 
-3. **utip checkdist | utip cd**
+5.**utip checkdist | utip cd**
 
 * 还原所有输出
 
-3. **utip pppppublish**
+6.**utip pppppublish**
 
 用于自动修改版本号，完成`npm publish`发布
 
