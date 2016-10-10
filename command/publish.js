@@ -12,7 +12,7 @@ const frameDir = [
 	'kero',
 	'neoui-grid',
 	'neoui-tree',
-	'neoui-polyfill',
+	'tinper-neoui-polyfill',
 	'kero-adapter'
 ];
 
@@ -76,7 +76,7 @@ module.exports = function() {
 						command = `cd ${resPath} && npm run product && npm publish && git add . && git commit -m 'npm publish' && git push origin release && cd ..`;
 						execSync(command);
 						break;
-					case 'neoui-polyfill':
+					case 'tinper-neoui-polyfill':
 						newPoly = newVersion;
 						command = `cd ${resPath} && npm run product && npm publish && git add . && git commit -m 'npm publish' && git push origin release && cd ..`;
 						execSync(command);

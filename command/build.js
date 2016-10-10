@@ -14,14 +14,14 @@ const frameDir = [
 	'kero-adapter',
 	'neoui-grid',
 	'neoui-tree',
-	'neoui-polyfill'
+	'tinper-neoui-polyfill'
 ];
 
 // gtree仓库-输出迁移目录至kero-adapter 
 const gtreeDir = [
 	'neoui-grid',
 	'neoui-tree',
-	'neoui-polyfill'
+	'tinper-neoui-polyfill'
 ];
 
 // npm包名-kero-adapter js依赖
