@@ -9,7 +9,7 @@ const path = require('path');
 // 仓库名-用于克隆或者更新仓库
 const frameDir = [
 	'sparrow',
-	'neoui',
+	'tinper-neoui',
 	'kero',
 	'kero-adapter',
 	'neoui-grid',
@@ -27,13 +27,13 @@ const gtreeDir = [
 // npm包名-kero-adapter js依赖
 const npmDir = [ 
 	'neoui-sparrow',
-	'neoui',
+	'tinper-neoui',
 	'kero'
 ];
 
 const rootList = {
 	"neoui-sparrow":["neoui", "kero", "kero-adapter"],
-	"neoui":["kero-adapter"],
+	"tinper-neoui":["kero-adapter"],
 	"kero":["kero-adapter"]
 };
 
@@ -47,7 +47,7 @@ module.exports = (options) => {
 			this.whole();
 			console.log(chalk.green(`\n √ 已clone更新各仓库，准备清空dist目录`));
 			
-			fse.emptyDirSync('./neoui/dist');
+			fse.emptyDirSync('./tinper-neoui/dist');
 			fse.emptyDirSync('./neoui-grid/dist');
 			fse.emptyDirSync('./neoui-tree/dist');
 			fse.emptyDirSync('./kero-adapter/dist');
@@ -172,8 +172,8 @@ module.exports = (options) => {
 					});
 					break;
 				case "neoui":
-					rootList["neoui"].forEach( function(element, index) {
-						fse.copySync(envPath + '/neoui/js', envPath +'/'+ element +'/node_modules/neoui/js');
+					rootList["tinper-neoui"].forEach( function(element, index) {
+						fse.copySync(envPath + '/tinper-neoui/js', envPath +'/'+ element +'/node_modules/tinper-neoui/js');
 					});
 					break;
 				case "kero":
@@ -188,12 +188,12 @@ module.exports = (options) => {
 		 * neoui仓库增加输出u.css并复制到kero-adapter/node_modules/neoui/dist中
 		 */
 		ucss: function(){
-			const uiDir = envPath + '/neoui';
+			const uiDir = envPath + '/tinper-neoui';
 			// 优化：替换npm run product
 			const cssCMD = `cd ${uiDir} && webpack --progress --colors --mode=product_normal && gulp dist && cd ..`;
 			execSync(cssCMD);
-			const neoDir = './neoui/dist/';
-			const neoModuleDir = './kero-adapter/node_modules/neoui/dist/';
+			const neoDir = './tinper-neoui/dist/';
+			const neoModuleDir = './kero-adapter/node_modules/tinper-neoui/dist/';
 			const neoAry = ['css', 'fonts', 'images'];
 
 			for(var i=0; i<neoAry.length; i++){

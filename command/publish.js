@@ -8,7 +8,7 @@ const path = require('path');
 // 仓库名
 const frameDir = [
 	'sparrow',
-	'neoui',
+	'tinper-neoui',
 	'kero',
 	'neoui-grid',
 	'neoui-tree',
@@ -56,7 +56,7 @@ module.exports = function() {
 						command = `cd ${resPath} && npm run product && npm publish && git add . && git commit -m 'npm publish' && git push origin release && cd ..`;
 						execSync(command);
 						break;
-					case 'neoui':
+					case 'tinper-neoui':
 						newNeoui = newVersion;
 						command = `cd ${resPath} && npm uninstall neoui-sparrow && npm install neoui-sparrow@${newSparrow} --save && npm run product && npm publish && git add . && git commit -m 'npm publish' && git push origin release && cd ..`;
 						execSync(command);
@@ -82,7 +82,7 @@ module.exports = function() {
 						execSync(command);
 						break;
 					default:
-						command = `cd ${resPath} && npm uninstall neoui-sparrow neoui kero neoui-grid neoui-tree neoui-polyfill && npm install neoui-sparrow@${newSparrow} kero@${newKero} neoui@${newNeoui} neoui-grid@${newGrid} neoui-tree@${newTree} neoui-polyfill@${newPoly} --save && npm run product && npm publish && git add . && git commit -m 'npm publish' && git push origin release && cd ..`;
+						command = `cd ${resPath} && npm uninstall neoui-sparrow tinper-neoui kero neoui-grid neoui-tree tinper-neoui-polyfill && npm install neoui-sparrow@${newSparrow} kero@${newKero} tinper-neoui@${newNeoui} neoui-grid@${newGrid} neoui-tree@${newTree} tinper-neoui-polyfill@${newPoly} --save && npm run product && npm publish && git add . && git commit -m 'npm publish' && git push origin release && cd ..`;
 						execSync(command);
 				}
 			});
