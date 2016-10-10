@@ -12,14 +12,14 @@ const frameDir = [
 	'tinper-neoui',
 	'kero',
 	'kero-adapter',
-	'neoui-grid',
+	'tinper-neoui-grid',
 	'neoui-tree',
 	'tinper-neoui-polyfill'
 ];
 
 // gtree仓库-输出迁移目录至kero-adapter 
 const gtreeDir = [
-	'neoui-grid',
+	'tinper-neoui-grid',
 	'neoui-tree',
 	'tinper-neoui-polyfill'
 ];
@@ -48,7 +48,7 @@ module.exports = (options) => {
 			console.log(chalk.green(`\n √ 已clone更新各仓库，准备清空dist目录`));
 			
 			fse.emptyDirSync('./tinper-neoui/dist');
-			fse.emptyDirSync('./neoui-grid/dist');
+			fse.emptyDirSync('./tinper-neoui-grid/dist');
 			fse.emptyDirSync('./neoui-tree/dist');
 			fse.emptyDirSync('./kero-adapter/dist');
 			console.log(chalk.green(`\n √ 已清空dist目录，准备执行neoui输出`));

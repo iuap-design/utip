@@ -12,7 +12,7 @@ const frameDir = [
 	'tinper-neoui',
 	'kero',
 	'kero-adapter',
-	'neoui-grid',
+	'tinper-neoui-grid',
 	'neoui-tree',
 	'tinper-neoui-polyfill'
 ];
