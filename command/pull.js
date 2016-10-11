@@ -8,7 +8,7 @@ const path = require('path');
 
 // 仓库名-用于克隆或者更新仓库
 const frameDir = [
-	'sparrow',
+	'tinper-sparrow',
 	'tinper-neoui',
 	'kero',
 	'kero-adapter',

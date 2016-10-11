@@ -8,7 +8,7 @@ const path = require('path');
 
 // 仓库名-用于克隆或者更新仓库
 const frameDir = [
-	'sparrow',
+	'tinper-sparrow',
 	'tinper-neoui',
 	'kero',
 	'kero-adapter',
@@ -26,13 +26,13 @@ const gtreeDir = [
 
 // npm包名-kero-adapter js依赖
 const npmDir = [ 
-	'neoui-sparrow',
+	'tinper-sparrow',
 	'tinper-neoui',
 	'kero'
 ];
 
 const rootList = {
-	"neoui-sparrow":["neoui", "kero", "kero-adapter"],
+	"tinper-sparrow":["tinper-neoui", "kero", "kero-adapter"],
 	"tinper-neoui":["kero-adapter"],
 	"kero":["kero-adapter"]
 };
@@ -118,60 +118,14 @@ module.exports = (options) => {
 		 * 复制拷贝各仓库js文件到kero-adapter下
 		 */
 		copy: function(copyname){
-			// 未优化前:所有根目录下仓库都会遍历拷贝
-			/*
-			var paths = fs.readdirSync(envPath);
-			var loopFun = function(paths) {
-
-				paths.forEach(function(path){
-					// 此处路径不能使用__dirname,会指向插件的路径
-					var _path = envPath + '/' + path + '/node_modules';
-					var nextMod = path + '/node_modules';
-					
-
-					// 判断子集nodemodules是否存在
-					if(fs.existsSync(_path)){
-
-						var st = fs.statSync(_path);
-
-						if(st.isDirectory()){
-							// 存在
-							var subpaths = fs.readdirSync(_path);
-							subpaths.forEach(function(subpath) {
-								// console.log(subpath);
-								try {
-
-									// 未优化
-								  	if(copyname == 'neoui-sparrow'){
-								  		fse.copySync(envPath + '/' + 'sparrow' + '/js', _path +'/'+ copyname +'/js')
-								  	} else {
-								  		fse.copySync(envPath + '/' + copyname + '/js', _path +'/'+ copyname +'/js')
-								  	}
-								} catch (err) {
-								  console.error(err)
-								}
-							});
-							var nextModAry = [nextMod];
-							loopFun(nextModAry);
-						} else {
-							// 不存在
-						}
-					}
-						
-				});
-			};
-			loopFun(paths);
-			*/
-
-			// 调整后
 			// 优化筛选，方便后期维护，使用switch.case
 			switch(copyname){
-				case "neoui-sparrow":
-					rootList["neoui-sparrow"].forEach( function(element, index) {
-						fse.copySync(envPath + '/sparrow/js', envPath +'/'+ element +'/node_modules/neoui-sparrow/js');
+				case "tinper-sparrow":
+					rootList["tinper-sparrow"].forEach( function(element, index) {
+						fse.copySync(envPath + '/tinper-sparrow/js', envPath +'/'+ element +'/node_modules/tinper-sparrow/js');
 					});
 					break;
-				case "neoui":
+				case "tinper-neoui":
 					rootList["tinper-neoui"].forEach( function(element, index) {
 						fse.copySync(envPath + '/tinper-neoui/js', envPath +'/'+ element +'/node_modules/tinper-neoui/js');
 					});
