@@ -17,7 +17,7 @@ const frameDir = [
 	'tinper-neoui-polyfill'
 ];
 
-// gtree仓库-输出迁移目录至kero-adapter 
+// gtree仓库-输出迁移目录至kero-adapter
 const gtreeDir = [
 	'tinper-neoui-grid',
 	'tinper-neoui-tree',
@@ -25,7 +25,7 @@ const gtreeDir = [
 ];
 
 // npm包名-kero-adapter js依赖
-const npmDir = [ 
+const npmDir = [
 	'tinper-sparrow',
 	'tinper-neoui',
 	'kero'
@@ -46,13 +46,13 @@ module.exports = (options) => {
 		init: function() {
 			this.whole();
 			console.log(chalk.green(`\n √ 已clone更新各仓库，准备清空dist目录`));
-			
+
 			fse.emptyDirSync('./tinper-neoui/dist');
 			fse.emptyDirSync('./tinper-neoui-grid/dist');
 			fse.emptyDirSync('./tinper-neoui-tree/dist');
 			fse.emptyDirSync('./kero-adapter/dist');
 			console.log(chalk.green(`\n √ 已清空dist目录，准备执行neoui输出`));
-			
+
 
 			this.ucss();
 			console.log(chalk.green(`\n √ 已执行输出neoui，完成样式&静态资源拷贝`));
@@ -67,7 +67,7 @@ module.exports = (options) => {
 
 			this.dist();
 			console.log(chalk.green(`\n √ 完成：kero-adapter已输出最新dist目录`));
-			
+
 		},
 
 		/**
@@ -75,7 +75,7 @@ module.exports = (options) => {
 		 * 如未下载，则下载本地仓库并使用cnpm install安装包
 		 */
 		whole: function(){
-			
+
 			// console.log(dirs);
 			frameDir.forEach(function(name){
 				if(dirs.indexOf(name) == -1){
@@ -92,7 +92,7 @@ module.exports = (options) => {
 				      process.exit()
 				    })
 				}
-				
+
 				if(inputConfig.mode == 'local'){
 					return;
 				} else {
@@ -144,8 +144,10 @@ module.exports = (options) => {
 		ucss: function(){
 			const uiDir = envPath + '/tinper-neoui';
 			// 优化：替换npm run product
-			const cssCMD = `cd ${uiDir} && webpack --progress --colors --mode=product_normal && gulp dist && cd ..`;
+			const cssCMD = `cd ${uiDir} && npm run utipbuild && cd ..`;
+
 			execSync(cssCMD);
+
 			const neoDir = './tinper-neoui/dist/';
 			const neoModuleDir = './kero-adapter/node_modules/tinper-neoui/dist/';
 			const neoAry = ['css', 'fonts', 'images'];
@@ -180,16 +182,18 @@ module.exports = (options) => {
 		 * 输出u.js
 		 */
 		dist: function(){
-			var adapterPath = envPath + "/kero-adapter";
-			var command = `cd ${adapterPath} && webpack --colors --progress && gulp dist`;
-			execSync(command, (error, stdout, stderr) => {
-		      if (error) {
-		        console.log(error)
-		        process.exit()
-		      }
-		      console.log(chalk.green('\n √ 已生成测试用u.js'))
-		      process.exit()
-		    })
+			var adapterPath = path.join(envPath ,"kero-adapter");
+			var command = `cd ${adapterPath} && npm run utipbuild`;
+			execSync(command);
+			console.log('complete');
+			// execSync(command, (error, stdout, stderr) => {
+		    //   if (error) {
+		    //     console.log(error)
+		    //     process.exit()
+		    //   }
+		    //   console.log(chalk.green('\n √ 已生成测试用u.js'))
+		    //   process.exit()
+		    // })
 		}
 	};
 
