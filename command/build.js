@@ -72,17 +72,17 @@ module.exports = (options) => {
 
 		/**
 		 * 判断依赖库是否下载完成
-		 * 如未下载，则下载本地仓库并使用cnpm install安装包
+		 * 如未下载，则下载本地仓库并使用npm install安装包
 		 */
 		whole: function(){
 
 			// console.log(dirs);
 			frameDir.forEach(function(name){
 				if(dirs.indexOf(name) == -1){
-					console.log(name + '正在从远程仓库克隆&cnpm下载依赖');
+					console.log(name + '正在从远程仓库克隆&npm下载依赖');
 					var resUrl = `git@github.com:iuap-design/${name}.git`;
 					console.log(resUrl);
-					var cloneCMD = `git clone git@github.com:iuap-design/${name}.git && cd ${name} && git checkout release && git pull origin release && cnpm install && cd ..`;
+					var cloneCMD = `git clone git@github.com:iuap-design/${name}.git && cd ${name} && git checkout release && git pull origin release && npm install && cd ..`;
 					execSync(cloneCMD, (error, stdout, stderr) => {
 				      if (error) {
 				        console.log(error)

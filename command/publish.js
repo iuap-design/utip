@@ -53,36 +53,37 @@ module.exports = function() {
 				switch (resname){
 					case 'tinper-sparrow':
 						newSparrow = newVersion;
-						command = `cd ${resPath} && npm run product && npm run changelog && npm publish && git add . && git commit -m 'npm publish' && git push origin release && cd ..`;
+						command = `cd ${resPath} && git tag v${newSparrow} && git push origin v${newSparrow}  && npm run product && npm run changelog && npm publish && git add . && git commit -m 'npm publish' && git push origin release && cd ..`;
 						execSync(command);
 						break;
 					case 'tinper-neoui':
 						newNeoui = newVersion;
-						command = `cd ${resPath} && npm uninstall tinper-sparrow && npm install tinper-sparrow@${newSparrow} --save && npm run product && npm run changelog && npm publish && git add . && git commit -m 'npm publish' && git push origin release && cd ..`;
+						command = `cd ${resPath} && npm uninstall tinper-sparrow && npm install tinper-sparrow@${newSparrow} --save && git tag v${newNeoui} && git push origin v${newNeoui} && npm run product && npm run changelog && npm publish && git add . && git commit -m 'npm publish' && git push origin release && cd ..`;
 						execSync(command);
 						break;
 					case 'kero':
 						newKero = newVersion;
-						command = `cd ${resPath} && npm uninstall tinper-sparrow && npm install tinper-sparrow@${newSparrow} --save && npm run product && npm run changelog && npm publish && git add . && git commit -m 'npm publish' && git push origin release && cd ..`;
+						command = `cd ${resPath} && npm uninstall tinper-sparrow && npm install tinper-sparrow@${newSparrow} --save && git tag v${newKero} && git push origin v${newKero} && npm run product && npm run changelog && npm publish && git add . && git commit -m 'npm publish' && git push origin release && cd ..`;
 						execSync(command);
 						break;
 					case 'tinper-neoui-grid':
 						newGrid = newVersion;
-						command = `cd ${resPath} && npm run product && npm run changelog && npm publish && git add . && git commit -m 'npm publish' && git push origin release && cd ..`;
+						command = `cd ${resPath} && git tag v${newGrid} && git push origin v${newGrid} && npm run product && npm run changelog && npm publish && git add . && git commit -m 'npm publish' && git push origin release && cd ..`;
 						execSync(command);
 					    break;
 					case 'tinper-neoui-tree':
 						newTree = newVersion;
-						command = `cd ${resPath} && npm run product && npm run changelog && npm publish && git add . && git commit -m 'npm publish' && git push origin release && cd ..`;
+						command = `cd ${resPath} && git tag v${newTree} && git push origin v${newTree} && npm run product && npm run changelog && npm publish && git add . && git commit -m 'npm publish' && git push origin release && cd ..`;
 						execSync(command);
 						break;
 					case 'tinper-neoui-polyfill':
 						newPoly = newVersion;
-						command = `cd ${resPath} && npm run product && npm run changelog && npm publish && git add . && git commit -m 'npm publish' && git push origin release && cd ..`;
+						command = `cd ${resPath} && git tag v${newPoly} && git push origin v${newPoly} && npm run product && npm run changelog && npm publish && git add . && git commit -m 'npm publish' && git push origin release && cd ..`;
 						execSync(command);
 						break;
 					default:
-						command = `cd ${resPath} && npm uninstall tinper-sparrow tinper-neoui kero tinper-neoui-grid tinper-neoui-tree tinper-neoui-polyfill && npm install tinper-sparrow@${newSparrow} kero@${newKero} tinper-neoui@${newNeoui} tinper-neoui-grid@${newGrid} tinper-neoui-tree@${newTree} tinper-neoui-polyfill@${newPoly} --save && npm run product && npm run changelog && npm publish && git add . && git commit -m 'npm publish' && git push origin release && cd ..`;
+						newKeroAdapter = newVersion;
+						command = `cd ${resPath} && npm uninstall tinper-sparrow tinper-neoui kero tinper-neoui-grid tinper-neoui-tree tinper-neoui-polyfill && npm install tinper-sparrow@${newSparrow} kero@${newKero} tinper-neoui@${newNeoui} tinper-neoui-grid@${newGrid} tinper-neoui-tree@${newTree} tinper-neoui-polyfill@${newPoly} --save && git tag v${newKeroAdapter} && git push origin v${newKeroAdapter} && npm run product && npm run changelog && npm publish && git add . && git commit -m 'npm publish' && git push origin release && cd ..`;
 						execSync(command);
 				}
 			});
