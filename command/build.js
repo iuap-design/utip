@@ -14,7 +14,11 @@ const frameDir = [
 	'kero-adapter',
 	'tinper-neoui-grid',
 	'tinper-neoui-tree',
-	'tinper-neoui-polyfill'
+	'tinper-neoui-polyfill',
+	'compox',
+	'compox-util',
+	'kero-fetch',
+	'neoui-kero-mixin'
 ];
 
 // gtree仓库-输出迁移目录至kero-adapter
@@ -24,17 +28,25 @@ const gtreeDir = [
 	'tinper-neoui-polyfill'
 ];
 
-// npm包名-kero-adapter js依赖
+// npm依赖
 const npmDir = [
 	'tinper-sparrow',
 	'tinper-neoui',
-	'kero'
+	'kero',
+	'kero-fetch',
+	'compox-util',
+	'compox',
+	'neoui-kero-mixin'
 ];
 
 const rootList = {
-	"tinper-sparrow":["tinper-neoui", "kero", "kero-adapter"],
-	"tinper-neoui":["kero-adapter"],
-	"kero":["kero-adapter"]
+	"tinper-sparrow":["tinper-neoui", "kero", "kero-adapter","compox","compox-util","kero-fetch","neoui-kero-mixin"],
+	"tinper-neoui":["kero-adapter","neoui-kero-mixin"],
+	"kero":["kero-adapter"],
+	"kero-fetch":["kero-adapter"],
+	"compox":["compox-util","kero-adapter","tinper-neoui","tinper-sparrow"],
+	"compox-util":["kero-adapter"],
+	"neoui-kero-mixin":["kero-adapter"]
 };
 
 const dirs = fs.readdirSync(envPath); // 输出当前目录下的目录名
@@ -78,17 +90,20 @@ module.exports = (options) => {
 
 			// console.log(dirs);
 			frameDir.forEach(function(name){
+
+				var branch = inputConfig.branch||'release';
+
 				if(dirs.indexOf(name) == -1){
 					console.log(name + '正在从远程仓库克隆&npm下载依赖');
 					var resUrl = `git@github.com:iuap-design/${name}.git`;
 					console.log(resUrl);
-					var cloneCMD = `git clone git@github.com:iuap-design/${name}.git && cd ${name} && git checkout release && git pull origin release && npm install && cd ..`;
+					var cloneCMD = `git clone git@github.com:iuap-design/${name}.git && cd ${name} && git checkout ${branch} && git pull origin ${branch} && npm install && cd ..`;
 					execSync(cloneCMD, (error, stdout, stderr) => {
 				      if (error) {
 				        console.log(error)
 				        process.exit()
 				      }
-				      console.log(chalk.green(`\n √ 已clone ${name}仓库`))
+				      console.log(chalk.green(`\n √ 已clone ${name}仓库并切换至${branch}分支`))
 				      process.exit()
 				    })
 				}
@@ -96,13 +111,14 @@ module.exports = (options) => {
 				if(inputConfig.mode == 'local'){
 					return;
 				} else {
-					var cloneCMD = `cd ${name} && git checkout release && git pull origin release && cd ..`;
+					var cloneCMD = `cd ${name} && git checkout ${branch} && git pull origin ${branch} && cd ..`;
+					
 					execSync(cloneCMD, (error, stdout, stderr) => {
 				      if (error) {
 				        console.log(error)
 				        process.exit()
 				      }
-				      console.log(chalk.green(`\n √ 已更新 ${name}仓库`))
+				      console.log(chalk.green(`\n √ 已更新 ${name}仓库并切换至${branch}分支`))
 				      process.exit()
 				    })
 				}
@@ -115,7 +131,7 @@ module.exports = (options) => {
 		},
 
 		/**
-		 * 复制拷贝各仓库js文件到kero-adapter下
+		 * 复制拷贝各仓库依赖文件到对应的相依赖的文件下,以便于没有发布的依赖包测试
 		 */
 		copy: function(copyname){
 			// 优化筛选，方便后期维护，使用switch.case
@@ -133,6 +149,26 @@ module.exports = (options) => {
 				case "kero":
 					rootList["kero"].forEach( function(element, index) {
 						fse.copySync(envPath + '/kero/js', envPath +'/'+ element +'/node_modules/kero/js');
+					});
+					break;
+				case "compox":
+					rootList["compox"].forEach( function(element, index) {
+						fse.copySync(envPath + '/compox/js', envPath +'/'+ element +'/node_modules/compox/js');
+					});
+					break;
+				case "compox-util":
+					rootList["compox-util"].forEach( function(element, index) {
+						fse.copySync(envPath + '/compox-util/js', envPath +'/'+ element +'/node_modules/compox-util/js');
+					});
+					break;
+				case "kero-fetch":
+					rootList["kero-fetch"].forEach( function(element, index) {
+						fse.copySync(envPath + '/kero-fetch/js', envPath +'/'+ element +'/node_modules/kero-fetch/js');
+					});
+					break;
+				case "neoui-kero-mixin":
+					rootList["neoui-kero-mixin"].forEach( function(element, index) {
+						fse.copySync(envPath + '/neoui-kero-mixin/js', envPath +'/'+ element +'/node_modules/neoui-kero-mixin/js');
 					});
 					break;
 			}

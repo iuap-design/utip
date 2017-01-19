@@ -10,10 +10,14 @@ const frameDir = [
 	'tinper-sparrow',
 	'tinper-neoui',
 	'kero',
+	'kero-adapter',
 	'tinper-neoui-grid',
 	'tinper-neoui-tree',
 	'tinper-neoui-polyfill',
-	'kero-adapter'
+	'compox',
+	'compox-util',
+	'kero-fetch',
+	'neoui-kero-mixin'
 ];
 
 const dirs = fs.readdirSync(envPath); // 输出当前目录下的目录名

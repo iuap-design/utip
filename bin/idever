@@ -9,13 +9,14 @@ program
 	.version(require('../package').version )
 
 program
-	.usage('<command> [options] <mode>')
+	.usage('<command> [options] <mode> <branch>')
 
 program
 	.command('build')
 	.alias('b')
 	.option('-m, --mode <mode>', '取消更新各个仓库')
-	.description('输出最终目录，可设置参数是否需要更新各仓库')
+	.option('-b, --branch <branch>', '切换到对应的分支')
+	.description('输出最终目录，可设置参数是否需要更新各仓库和切换到相应的分支')
 	.action((options) => {
 		require('../command/build')(options)
 	})
@@ -53,7 +54,8 @@ program
 
 program
 	.command('pull')
-	.description('拉取仓库更新')
+	.option('-b, --branch <branch>', '切换到对应的分支')
+	.description('拉取仓库更新，可设置参数是否需要切换分支')
 	.alias('pu')
 	.action(() => {
 		require('../command/pull')()
