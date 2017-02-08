@@ -1,4 +1,4 @@
-#!/usr/bin/env node 
+#!/usr/bin/env node
 'use strict'
 
 process.env.NODE_PATH = __dirname + '/../node_modules/'
@@ -54,11 +54,11 @@ program
 
 program
 	.command('pull')
+	.alias('pu')
 	.option('-b, --branch <branch>', '切换到对应的分支')
 	.description('拉取仓库更新，可设置参数是否需要切换分支')
-	.alias('pu')
-	.action(() => {
-		require('../command/pull')()
+	.action((options) => {
+		require('../command/pull')(options)
 	})
 
 program.parse(process.argv)

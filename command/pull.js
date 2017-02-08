@@ -24,7 +24,7 @@ const frameDir = [
 const dirs = fs.readdirSync(envPath); // 输出当前目录下的目录名
 
 module.exports = (options) => {
-	var inputConfig = options;
+	var inputConfig = options||{};
 
 	var buildFun = {
 		init: function() {
@@ -33,7 +33,7 @@ module.exports = (options) => {
 		},
 
 		pull: function(){
-			
+
 			// console.log(dirs);
 			frameDir.forEach(function(name){
 				var branch = inputConfig.branch||'release';

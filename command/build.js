@@ -52,7 +52,7 @@ const rootList = {
 const dirs = fs.readdirSync(envPath); // 输出当前目录下的目录名
 
 module.exports = (options) => {
-	var inputConfig = options;
+	var inputConfig = options||{};
 
 	var buildFun = {
 		init: function() {
@@ -112,7 +112,7 @@ module.exports = (options) => {
 					return;
 				} else {
 					var cloneCMD = `cd ${name} && git checkout ${branch} && git pull origin ${branch} && cd ..`;
-					
+
 					execSync(cloneCMD, (error, stdout, stderr) => {
 				      if (error) {
 				        console.log(error)
