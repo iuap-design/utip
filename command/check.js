@@ -10,7 +10,7 @@ const frameDir = [
 	'tinper-sparrow',
 	'tinper-neoui',
 	'kero',
-	'kero-adapter',
+	'neoui-kero',
 	'tinper-neoui-grid',
 	'tinper-neoui-tree',
 	'tinper-neoui-polyfill',

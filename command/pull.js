@@ -11,7 +11,7 @@ const frameDir = [
 	'tinper-sparrow',
 	'tinper-neoui',
 	'kero',
-	'kero-adapter',
+	'neoui-kero',
 	'tinper-neoui-grid',
 	'tinper-neoui-tree',
 	'tinper-neoui-polyfill',
@@ -64,7 +64,7 @@ module.exports = (options) => {
 			});
 
 			// git@github.com:iuap-design/sparrow.git
-			// git@github.com:iuap-design/kero-adapter.git
+			// git@github.com:iuap-design/neoui-kero.git
 			// git@github.com:iuap-design/kero.git
 			// git@github.com:iuap-design/neoui.git
 		}

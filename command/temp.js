@@ -33,7 +33,7 @@ module.exports = () => {
 				// 创建目录
 				var command;
 				if(dirs.indexOf('tplName') == -1) {
-					command = `mkdir ${tplName} && cd ${tplName} && touch index.html && cd .. && cp -R kero-adapter/dist/ ${tplName}`;
+					command = `mkdir ${tplName} && cd ${tplName} && touch index.html && cd .. && cp -R neoui-kero/dist/ ${tplName}`;
 				} else {
 					console.log(chalk.red(`本地已创建${tplName}目录，请确认是否已创建过或重新创建新的测试文件夹`));
 					return;

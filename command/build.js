@@ -11,7 +11,7 @@ const frameDir = [
 	'tinper-sparrow',
 	'tinper-neoui',
 	'kero',
-	'kero-adapter',
+	'neoui-kero',
 	'tinper-neoui-grid',
 	'tinper-neoui-tree',
 	'tinper-neoui-polyfill',
@@ -21,7 +21,7 @@ const frameDir = [
 	'neoui-kero-mixin'
 ];
 
-// gtree仓库-输出迁移目录至kero-adapter
+// gtree仓库-输出迁移目录至neoui-kero
 const gtreeDir = [
 	'tinper-neoui-grid',
 	'tinper-neoui-tree',
@@ -40,13 +40,13 @@ const npmDir = [
 ];
 
 const rootList = {
-	"tinper-sparrow":["tinper-neoui", "kero", "kero-adapter","compox","compox-util","kero-fetch","neoui-kero-mixin"],
-	"tinper-neoui":["kero-adapter","neoui-kero-mixin"],
-	"kero":["kero-adapter"],
-	"kero-fetch":["kero-adapter"],
-	"compox":["compox-util","kero-adapter","tinper-neoui","tinper-sparrow"],
-	"compox-util":["kero-adapter"],
-	"neoui-kero-mixin":["kero-adapter"]
+	"tinper-sparrow":["tinper-neoui", "kero", "neoui-kero","compox","compox-util","kero-fetch","neoui-kero-mixin"],
+	"tinper-neoui":["neoui-kero","neoui-kero-mixin"],
+	"kero":["neoui-kero"],
+	"kero-fetch":["neoui-kero"],
+	"compox":["compox-util","neoui-kero","tinper-neoui","tinper-sparrow"],
+	"compox-util":["neoui-kero"],
+	"neoui-kero-mixin":["neoui-kero"]
 };
 
 const dirs = fs.readdirSync(envPath); // 输出当前目录下的目录名
@@ -62,7 +62,7 @@ module.exports = (options) => {
 			fse.emptyDirSync('./tinper-neoui/dist');
 			fse.emptyDirSync('./tinper-neoui-grid/dist');
 			fse.emptyDirSync('./tinper-neoui-tree/dist');
-			fse.emptyDirSync('./kero-adapter/dist');
+			fse.emptyDirSync('./neoui-kero/dist');
 			console.log(chalk.green(`\n √ 已清空dist目录，准备执行neoui输出`));
 
 
@@ -78,7 +78,7 @@ module.exports = (options) => {
 			console.log(chalk.green(`\n √ 已复制源码,准备输出最终目录`));
 
 			this.dist();
-			console.log(chalk.green(`\n √ 完成：kero-adapter已输出最新dist目录`));
+			console.log(chalk.green(`\n √ 完成：neoui-kero已输出最新dist目录`));
 
 		},
 
@@ -125,7 +125,7 @@ module.exports = (options) => {
 			});
 
 			// git@github.com:iuap-design/sparrow.git
-			// git@github.com:iuap-design/kero-adapter.git
+			// git@github.com:iuap-design/neoui-kero.git
 			// git@github.com:iuap-design/kero.git
 			// git@github.com:iuap-design/neoui.git
 		},
@@ -175,7 +175,7 @@ module.exports = (options) => {
 		},
 
 		/**
-		 * neoui仓库增加输出u.css并复制到kero-adapter/node_modules/neoui/dist中
+		 * neoui仓库增加输出u.css并复制到neoui-kero/node_modules/neoui/dist中
 		 */
 		ucss: function(){
 			const uiDir = envPath + '/tinper-neoui';
@@ -185,13 +185,13 @@ module.exports = (options) => {
 			execSync(cssCMD);
 
 			const neoDir = './tinper-neoui/dist/';
-			const neoModuleDir = './kero-adapter/node_modules/tinper-neoui/dist/';
+			const neoModuleDir = './neoui-kero/node_modules/tinper-neoui/dist/';
 			const neoAry = ['css', 'fonts', 'images'];
 
 			for(var i=0; i<neoAry.length; i++){
 				var dirExist = fse.ensureDirSync(`${neoModuleDir}${neoAry[i]}`);
 				if(! dirExist) {
-					console.log(`创建kero-adapter依赖模块neoui的输出目录dist/${neoAry[i]}`);
+					console.log(`创建neoui-kero依赖模块neoui的输出目录dist/${neoAry[i]}`);
 					fse.mkdirsSync(`${neoModuleDir}${neoAry[i]}`);
 				}
 
@@ -200,7 +200,7 @@ module.exports = (options) => {
 		},
 
 		/**
-		 * grid,tree输出复制到kero-adapter/node_modules/grid/dist
+		 * grid,tree输出复制到neoui-kero/node_modules/grid/dist
 		 */
 		gtree: function(){
 			gtreeDir.forEach(function(name){
@@ -208,7 +208,7 @@ module.exports = (options) => {
 				var treeCMD = `cd ./${name} && npm run product && cd ..`;
 				execSync(treeCMD);
 				var treeDist = `./${name}/dist`;
-				var treeModuleDist = `./kero-adapter/node_modules/${name}/dist`;
+				var treeModuleDist = `./neoui-kero/node_modules/${name}/dist`;
 				fse.copySync(`${treeDist}`, `${treeModuleDist}`);
 			});
 
@@ -218,7 +218,7 @@ module.exports = (options) => {
 		 * 输出u.js
 		 */
 		dist: function(){
-			var adapterPath = path.join(envPath ,"kero-adapter");
+			var adapterPath = path.join(envPath ,"neoui-kero");
 			var command = `cd ${adapterPath} && npm run utipbuild`;
 			execSync(command);
 			console.log('complete');
