@@ -33,7 +33,7 @@ module.exports = function() {
 		 * 更改各仓库package.json文件,并提交
 		 */
 		pkg: function() {
-			var newSparrow,newNeoui,newKero,newGrid,newTree,newPoly;
+			var newSparrow,newCompox,newCompoxUtil,newNeoui,newMixin,newKero,newKeroFetch,newGrid,newTree,newPoly,newKeroAdapter;
 			frameDir.forEach(function(resname){
 				var originVersion = require(envPath+ '/' + resname + '/package.json').version.split('.');
 				console.log(`${resname}老版本为${originVersion}`);
