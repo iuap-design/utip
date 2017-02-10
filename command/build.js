@@ -44,7 +44,7 @@ const rootList = {
 	"tinper-neoui":["neoui-kero","neoui-kero-mixin"],
 	"kero":["neoui-kero"],
 	"kero-fetch":["neoui-kero"],
-	"compox":["compox-util","neoui-kero","tinper-neoui"],
+	"compox":["compox-util","kero-fetch","neoui-kero","tinper-neoui"],
 	"compox-util":["neoui-kero"],
 	"neoui-kero-mixin":["neoui-kero"]
 };

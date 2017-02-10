@@ -88,7 +88,7 @@ module.exports = function() {
 						break;
 					case 'kero-fetch':
 						newKeroFetch = newVersion;
-						command = `cd ${resPath} && npm uninstall tinper-sparrow && npm install tinper-sparrow@${newSparrow} --save && git tag v${newNeoui} && git push origin v${newNeoui} && npm run product && npm run changelog && npm publish && git add -A && git commit -m 'npm publish' && git push origin release && cd ..`;
+						command = `cd ${resPath} && npm uninstall tinper-sparrow compox && npm install tinper-sparrow@${newSparrow} compox@${newCompox} --save && git tag v${newNeoui} && git push origin v${newNeoui} && npm run product && npm run changelog && npm publish && git add -A && git commit -m 'npm publish' && git push origin release && cd ..`;
 						execSync(command);
 						break;
 					case 'tinper-neoui-grid':
