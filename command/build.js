@@ -5,9 +5,8 @@ const chalk = require('chalk');
 const fse = require('fs-extra');
 const path = require('path');
 
-
-// 仓库名-用于克隆或者更新仓库
-const frameDir = [
+// npm依赖
+const npmDir = [
 	'tinper-sparrow',
 	'tinper-neoui',
 	'kero',
@@ -18,38 +17,21 @@ const frameDir = [
 	'compox',
 	'compox-util',
 	'kero-fetch',
-	'neoui-kero-mixin',
-	'tinper-moy'
-];
-
-// gtree仓库-输出迁移目录至neoui-kero
-const gtreeDir = [
-	'tinper-neoui-grid',
-	'tinper-neoui-tree',
-	'tinper-neoui-polyfill'
-];
-
-// npm依赖
-const npmDir = [
-	'tinper-sparrow',
-	'tinper-neoui',
-	'kero',
-	'kero-fetch',
-	'compox-util',
-	'compox',
-	'neoui-kero-mixin',
-	'neoui-kero'
+	'neoui-kero-mixin'
 ];
 
 const rootList = {
 	"tinper-sparrow":["tinper-neoui", "kero", "neoui-kero","compox","compox-util","kero-fetch","neoui-kero-mixin","tinper-moy"],
 	"tinper-neoui":["neoui-kero","neoui-kero-mixin","tinper-moy"],
 	"kero":["neoui-kero","tinper-moy"],
-	"kero-fetch":["neoui-kero","tinper-moy"],
+	"kero-fetch":["tinper-moy"],
 	"compox":["compox-util","kero-fetch","neoui-kero","tinper-neoui","tinper-moy"],
-	"compox-util":["neoui-kero","tinper-moy"],
+	"compox-util":["tinper-moy"],
 	"neoui-kero-mixin":["neoui-kero","tinper-moy"],
-	"neoui-kero":["tinper-moy"]
+	"neoui-kero":["tinper-moy"],
+	"tinper-neoui-grid":['tinper-moy'],
+	"tinper-neoui-tree":['tinper-moy'],
+	"tinper-neoui-polyfill":['tinper-moy']
 };
 
 const dirs = fs.readdirSync(envPath); // 输出当前目录下的目录名
@@ -62,23 +44,28 @@ module.exports = (options) => {
 			this.whole();
 			console.log(chalk.green(`\n √ 已clone更新各仓库，准备清空dist目录`));
 
+
+			fse.emptyDirSync('./compox/dist');
+			fse.emptyDirSync('./compox-util/dist');
+			fse.emptyDirSync('./kero/dist');
+			fse.emptyDirSync('./kero-fetch/dist');
+			fse.emptyDirSync('./neoui-kero/dist');
+			fse.emptyDirSync('./neoui-kero-mixin/dist');
 			fse.emptyDirSync('./tinper-neoui/dist');
 			fse.emptyDirSync('./tinper-neoui-grid/dist');
+			fse.emptyDirSync('./tinper-neoui-polyfill/dist');
 			fse.emptyDirSync('./tinper-neoui-tree/dist');
-			fse.emptyDirSync('./neoui-kero/dist');
-			console.log(chalk.green(`\n √ 已清空dist目录，准备执行neoui输出`));
-
-
-			this.ucss();
-			console.log(chalk.green(`\n √ 已执行输出neoui，完成样式&静态资源拷贝`));
-
-			this.gtree();
-			console.log(chalk.green(`\n √ 已执行输出grid,tree,polyfill,完成拷贝`));
+			fse.emptyDirSync('./tinper-sparrow/dist');
+			console.log(chalk.green(`\n √ 已清空dist目录，准备执行源码仓库输出`));
 
 			for(var i=0; i<npmDir.length; i++){
 				this.copy(npmDir[i]);
 			}
-			console.log(chalk.green(`\n √ 已复制源码,准备输出最终目录`));
+			console.log(chalk.green(`\n √ 已执行源码仓库src目录复制`));
+			for(var i=0; i<npmDir.length; i++){
+				this.runutipbuild(npmDir[i]);
+			}
+			console.log(chalk.green(`\n √ 已执行源码仓库输出,产出最终dist`));
 
 			this.dist();
 			console.log(chalk.green(`\n √ 完成：neoui-kero已输出最新dist目录`));
@@ -90,47 +77,51 @@ module.exports = (options) => {
 		 * 如未下载，则下载本地仓库并使用npm install安装包
 		 */
 		whole: function(){
-
+			var oThis = this;
 			// console.log(dirs);
-			frameDir.forEach(function(name){
-
-				var branch = inputConfig.branch||'release';
-
-				if(dirs.indexOf(name) == -1){
-					console.log(name + '正在从远程仓库克隆&npm下载依赖');
-					var resUrl = `git@github.com:iuap-design/${name}.git`;
-					console.log(resUrl);
-					var cloneCMD = `git clone git@github.com:iuap-design/${name}.git && cd ${name} && git checkout ${branch} && git pull origin ${branch} && npm install && cd ..`;
-					execSync(cloneCMD, (error, stdout, stderr) => {
-				      if (error) {
-				        console.log(error)
-				        process.exit()
-				      }
-				      console.log(chalk.green(`\n √ 已clone ${name}仓库并切换至${branch}分支`))
-				      process.exit()
-				    })
-				}
-
-				if(inputConfig.mode == 'local'){
-					return;
-				} else {
-					var cloneCMD = `cd ${name} && git checkout ${branch} && git pull origin ${branch} && cd ..`;
-
-					execSync(cloneCMD, (error, stdout, stderr) => {
-				      if (error) {
-				        console.log(error)
-				        process.exit()
-				      }
-				      console.log(chalk.green(`\n √ 已更新 ${name}仓库并切换至${branch}分支`))
-				      process.exit()
-				    })
-				}
+			npmDir.forEach(function(name){
+				oThis.cloneFun(name);
 			});
+			this.cloneFun('tinper-moy');
 
 			// git@github.com:iuap-design/sparrow.git
 			// git@github.com:iuap-design/neoui-kero.git
 			// git@github.com:iuap-design/kero.git
 			// git@github.com:iuap-design/neoui.git
+		},
+
+		cloneFun: function(name){
+			var branch = inputConfig.branch||'release';
+
+			if(dirs.indexOf(name) == -1){
+				console.log(name + '正在从远程仓库克隆&npm下载依赖');
+				var resUrl = `git@github.com:iuap-design/${name}.git`;
+				console.log(resUrl);
+				var cloneCMD = `git clone git@github.com:iuap-design/${name}.git && cd ${name} && git checkout ${branch} && git pull origin ${branch} && npm install && cd ..`;
+				execSync(cloneCMD, (error, stdout, stderr) => {
+						if (error) {
+							console.log(error)
+							process.exit()
+						}
+						console.log(chalk.green(`\n √ 已clone ${name}仓库并切换至${branch}分支`))
+						process.exit()
+					})
+			}
+
+			if(inputConfig.mode == 'local'){
+				return;
+			} else {
+				var cloneCMD = `cd ${name} && git checkout ${branch} && git pull origin ${branch} && cd ..`;
+
+				execSync(cloneCMD, (error, stdout, stderr) => {
+						if (error) {
+							console.log(error)
+							process.exit()
+						}
+						console.log(chalk.green(`\n √ 已更新 ${name}仓库并切换至${branch}分支`))
+						process.exit()
+					})
+			}
 		},
 
 		/**
@@ -142,98 +133,57 @@ module.exports = (options) => {
 				case "tinper-sparrow":
 					rootList["tinper-sparrow"].forEach( function(element, index) {
 						fse.copySync(envPath + '/tinper-sparrow/src', envPath +'/'+ element +'/node_modules/tinper-sparrow/src');
-						fse.copySync(envPath + '/tinper-sparrow/dist', envPath +'/'+ element +'/node_modules/tinper-sparrow/dist');
 					});
 					break;
 				case "tinper-neoui":
 					rootList["tinper-neoui"].forEach( function(element, index) {
 						fse.copySync(envPath + '/tinper-neoui/src', envPath +'/'+ element +'/node_modules/tinper-neoui/src');
-						fse.copySync(envPath + '/tinper-neoui/dist', envPath +'/'+ element +'/node_modules/tinper-neoui/dist');
 					});
 					break;
 				case "kero":
 					rootList["kero"].forEach( function(element, index) {
 						fse.copySync(envPath + '/kero/src', envPath +'/'+ element +'/node_modules/kero/src');
-						fse.copySync(envPath + '/kero/dist', envPath +'/'+ element +'/node_modules/kero/dist');
 					});
 					break;
 				case "compox":
 					rootList["compox"].forEach( function(element, index) {
 						fse.copySync(envPath + '/compox/src', envPath +'/'+ element +'/node_modules/compox/src');
-						fse.copySync(envPath + '/compox/dist', envPath +'/'+ element +'/node_modules/compox/dist');
 					});
 					break;
 				case "compox-util":
 					rootList["compox-util"].forEach( function(element, index) {
 						fse.copySync(envPath + '/compox-util/src', envPath +'/'+ element +'/node_modules/compox-util/src');
-						fse.copySync(envPath + '/compox-util/dist', envPath +'/'+ element +'/node_modules/compox-util/dist');
 					});
 					break;
 				case "kero-fetch":
 					rootList["kero-fetch"].forEach( function(element, index) {
 						fse.copySync(envPath + '/kero-fetch/src', envPath +'/'+ element +'/node_modules/kero-fetch/src');
-						fse.copySync(envPath + '/kero-fetch/dist', envPath +'/'+ element +'/node_modules/kero-fetch/dist');
 					});
 					break;
 				case "neoui-kero-mixin":
 					rootList["neoui-kero-mixin"].forEach( function(element, index) {
 						fse.copySync(envPath + '/neoui-kero-mixin/src', envPath +'/'+ element +'/node_modules/neoui-kero-mixin/src');
-						fse.copySync(envPath + '/neoui-kero-mixin/dist', envPath +'/'+ element +'/node_modules/neoui-kero-mixin/dist');
 					});
 					break;
 				case "neoui-kero":
 					rootList["neoui-kero"].forEach( function(element, index) {
 						fse.copySync(envPath + '/neoui-kero/src', envPath +'/'+ element +'/node_modules/neoui-kero/src');
-						fse.copySync(envPath + '/neoui-kero/dist', envPath +'/'+ element +'/node_modules/neoui-kero/dist');
 					});
 					break;
 			}
 		},
 
-		/**
-		 * neoui仓库增加输出u.css并复制到neoui-kero/node_modules/neoui/dist中
-		 */
-		ucss: function(){
-			const uiDir = envPath + '/tinper-neoui';
-			// 优化：替换npm run product
-			const cssCMD = `cd ${uiDir} && npm run utipbuild && cd ..`;
-
-			execSync(cssCMD);
-
-			const neoDir = './tinper-neoui/dist/';
-			const neoModuleDir = './neoui-kero/node_modules/tinper-neoui/dist/';
-			const neoAry = ['css', 'fonts', 'images'];
-
-			for(var i=0; i<neoAry.length; i++){
-				var dirExist = fse.ensureDirSync(`${neoModuleDir}${neoAry[i]}`);
-				if(! dirExist) {
-					console.log(`创建neoui-kero依赖模块neoui的输出目录dist/${neoAry[i]}`);
-					fse.mkdirsSync(`${neoModuleDir}${neoAry[i]}`);
-				}
-
-				fse.copySync(`${neoDir}${neoAry[i]}`, `${neoModuleDir}${neoAry[i]}`);
-			}
-		},
-
-		/**
-		 * grid,tree输出复制到neoui-kero/node_modules/grid/dist
-		 */
-		gtree: function(){
-			gtreeDir.forEach(function(name){
-				// 优化npm run product
-				var treeCMD = `cd ./${name} && npm run product && cd ..`;
-				execSync(treeCMD);
-				var treeDist = `./${name}/dist`;
-				var treeModuleDist = `./neoui-kero/node_modules/${name}/dist`;
-				fse.copySync(`${treeDist}`, `${treeModuleDist}`);
-			});
-
+		runutipbuild: function(npmdir){
+				const uiDir = envPath + '/' + npmdir;
+				const cssCMD = `cd ${uiDir} && npm run product && cd ..`;
+				execSync(cssCMD);
 		},
 
 		/**
 		 * 输出u.js
 		 */
 		dist: function(){
+			this.copyDist();
 			var adapterPath = path.join(envPath ,"tinper-moy");
 			var command = `cd ${adapterPath} && npm run utipbuild`;
 			execSync(command);
@@ -246,6 +196,12 @@ module.exports = (options) => {
 		    //   console.log(chalk.green('\n √ 已生成测试用u.js'))
 		    //   process.exit()
 		    // })
+		},
+
+		copyDist: function(){
+			for(var i=0; i<npmDir.length; i++){
+				fse.copySync(envPath + '/' + npmDir[i] + '/dist', envPath +'/tinper-moy/node_modules/' + npmDir[i] + '/dist');
+			}
 		}
 	};
 

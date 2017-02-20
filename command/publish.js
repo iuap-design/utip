@@ -18,7 +18,6 @@ const frameDir = [
 	'tinper-neoui-tree',
 	'tinper-neoui-polyfill',
 	'neoui-kero',
-	'tinper-moy'
 ];
 
 const dirs = fs.readdirSync(envPath); // 输出当前目录下的目录名
@@ -64,12 +63,12 @@ module.exports = function() {
 						break;
 					case 'compox':
 						newCompox = newVersion;
-						command = `cd ${resPath} && npm uninstall tinper-sparrow && npm install tinper-sparrow@${newSparrow} --save && git tag v${newNeoui} && git push origin v${newNeoui} && npm run product && npm run changelog && npm publish && git add -A && git commit -m 'npm publish' && git push origin release && cd ..`;
+						command = `cd ${resPath} && npm uninstall tinper-sparrow && npm install tinper-sparrow@${newSparrow} --save && git tag v${newCompox} && git push origin v${newCompox} && npm run product && npm run changelog && npm publish && git add -A && git commit -m 'npm publish' && git push origin release && cd ..`;
 						execSync(command);
 						break;
 					case 'compox-util':
 						newCompoxUtil = newVersion;
-						command = `cd ${resPath} && npm uninstall tinper-sparrow compox && npm install tinper-sparrow@${newSparrow} compox@${newCompox} --save && git tag v${newNeoui} && git push origin v${newNeoui} && npm run product && npm run changelog && npm publish && git add -A && git commit -m 'npm publish' && git push origin release && cd ..`;
+						command = `cd ${resPath} && npm uninstall tinper-sparrow compox && npm install tinper-sparrow@${newSparrow} compox@${newCompox} --save && git tag v${newCompoxUtil} && git push origin v${newCompoxUtil} && npm run product && npm run changelog && npm publish && git add -A && git commit -m 'npm publish' && git push origin release && cd ..`;
 						execSync(command);
 						break;
 					case 'tinper-neoui':
@@ -79,7 +78,7 @@ module.exports = function() {
 						break;
 					case 'neoui-kero-mixin':
 						newMixin = newVersion;
-						command = `cd ${resPath} && npm uninstall tinper-sparrow tinper-neoui && npm install tinper-sparrow@${newSparrow} tinper-neoui@${newNeoui} --save && git tag v${newNeoui} && git push origin v${newNeoui} && npm run product && npm run changelog && npm publish && git add -A && git commit -m 'npm publish' && git push origin release && cd ..`;
+						command = `cd ${resPath} && npm uninstall tinper-sparrow tinper-neoui && npm install tinper-sparrow@${newSparrow} tinper-neoui@${newNeoui} --save && git tag v${newMixin} && git push origin v${newMixin} && npm run product && npm run changelog && npm publish && git add -A && git commit -m 'npm publish' && git push origin release && cd ..`;
 						execSync(command);
 						break;
 					case 'kero':
@@ -89,7 +88,7 @@ module.exports = function() {
 						break;
 					case 'kero-fetch':
 						newKeroFetch = newVersion;
-						command = `cd ${resPath} && npm uninstall tinper-sparrow compox && npm install tinper-sparrow@${newSparrow} compox@${newCompox} --save && git tag v${newNeoui} && git push origin v${newNeoui} && npm run product && npm run changelog && npm publish && git add -A && git commit -m 'npm publish' && git push origin release && cd ..`;
+						command = `cd ${resPath} && npm uninstall tinper-sparrow compox && npm install tinper-sparrow@${newSparrow} compox@${newCompox} --save && git tag v${newKeroFetch} && git push origin v${newKeroFetch} && npm run product && npm run changelog && npm publish && git add -A && git commit -m 'npm publish' && git push origin release && cd ..`;
 						execSync(command);
 						break;
 					case 'tinper-neoui-grid':
@@ -109,7 +108,7 @@ module.exports = function() {
 						break;
 					default:
 						newKeroAdapter = newVersion;
-						command = `cd ${resPath} && npm uninstall tinper-sparrow compox compox-util tinper-neoui neoui-kero-mixin kero kero-fetch tinper-neoui-grid tinper-neoui-tree tinper-neoui-polyfill && npm install tinper-sparrow@${newSparrow}  compox@${newCompox}  compox-util@${newCompoxUtil} tinper-neoui@${newNeoui} neoui-kero-mixin@${newMixin} kero@${newKero} kero-fetch@${newKeroFetch} tinper-neoui-grid@${newGrid} tinper-neoui-tree@${newTree} tinper-neoui-polyfill@${newPoly} --save && git tag v${newKeroAdapter} && git push origin v${newKeroAdapter} && npm run product && npm run changelog && npm publish && git add -A && git commit -m 'npm publish' && git push origin release && cd ..`;
+						command = `cd ${resPath} && npm uninstall compox kero neoui-kero-mixin tinper-neoui tinper-sparrow && npm install tinper-sparrow@${newSparrow}  compox@${newCompox}  tinper-neoui@${newNeoui} neoui-kero-mixin@${newMixin} kero@${newKero}  --save && git tag v${newKeroAdapter} && git push origin v${newKeroAdapter} && npm run product && npm run changelog && npm publish && git add -A && git commit -m 'npm publish' && git push origin release && cd ..`;
 						execSync(command);
 				}
 			});
