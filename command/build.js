@@ -18,7 +18,8 @@ const frameDir = [
 	'compox',
 	'compox-util',
 	'kero-fetch',
-	'neoui-kero-mixin'
+	'neoui-kero-mixin',
+	'tinper-moy'
 ];
 
 // gtree仓库-输出迁移目录至neoui-kero
@@ -36,17 +37,19 @@ const npmDir = [
 	'kero-fetch',
 	'compox-util',
 	'compox',
-	'neoui-kero-mixin'
+	'neoui-kero-mixin',
+	'neoui-kero'
 ];
 
 const rootList = {
-	"tinper-sparrow":["tinper-neoui", "kero", "neoui-kero","compox","compox-util","kero-fetch","neoui-kero-mixin"],
-	"tinper-neoui":["neoui-kero","neoui-kero-mixin"],
-	"kero":["neoui-kero"],
-	"kero-fetch":["neoui-kero"],
-	"compox":["compox-util","kero-fetch","neoui-kero","tinper-neoui"],
-	"compox-util":["neoui-kero"],
-	"neoui-kero-mixin":["neoui-kero"]
+	"tinper-sparrow":["tinper-neoui", "kero", "neoui-kero","compox","compox-util","kero-fetch","neoui-kero-mixin","tinper-moy"],
+	"tinper-neoui":["neoui-kero","neoui-kero-mixin","tinper-moy"],
+	"kero":["neoui-kero","tinper-moy"],
+	"kero-fetch":["neoui-kero","tinper-moy"],
+	"compox":["compox-util","kero-fetch","neoui-kero","tinper-neoui","tinper-moy"],
+	"compox-util":["neoui-kero","tinper-moy"],
+	"neoui-kero-mixin":["neoui-kero","tinper-moy"],
+	"neoui-kero":["tinper-moy"]
 };
 
 const dirs = fs.readdirSync(envPath); // 输出当前目录下的目录名
@@ -138,37 +141,50 @@ module.exports = (options) => {
 			switch(copyname){
 				case "tinper-sparrow":
 					rootList["tinper-sparrow"].forEach( function(element, index) {
-						fse.copySync(envPath + '/tinper-sparrow/js', envPath +'/'+ element +'/node_modules/tinper-sparrow/js');
+						fse.copySync(envPath + '/tinper-sparrow/src', envPath +'/'+ element +'/node_modules/tinper-sparrow/src');
+						fse.copySync(envPath + '/tinper-sparrow/dist', envPath +'/'+ element +'/node_modules/tinper-sparrow/dist');
 					});
 					break;
 				case "tinper-neoui":
 					rootList["tinper-neoui"].forEach( function(element, index) {
-						fse.copySync(envPath + '/tinper-neoui/js', envPath +'/'+ element +'/node_modules/tinper-neoui/js');
+						fse.copySync(envPath + '/tinper-neoui/src', envPath +'/'+ element +'/node_modules/tinper-neoui/src');
+						fse.copySync(envPath + '/tinper-neoui/dist', envPath +'/'+ element +'/node_modules/tinper-neoui/dist');
 					});
 					break;
 				case "kero":
 					rootList["kero"].forEach( function(element, index) {
-						fse.copySync(envPath + '/kero/js', envPath +'/'+ element +'/node_modules/kero/js');
+						fse.copySync(envPath + '/kero/src', envPath +'/'+ element +'/node_modules/kero/src');
+						fse.copySync(envPath + '/kero/dist', envPath +'/'+ element +'/node_modules/kero/dist');
 					});
 					break;
 				case "compox":
 					rootList["compox"].forEach( function(element, index) {
-						fse.copySync(envPath + '/compox/js', envPath +'/'+ element +'/node_modules/compox/js');
+						fse.copySync(envPath + '/compox/src', envPath +'/'+ element +'/node_modules/compox/src');
+						fse.copySync(envPath + '/compox/dist', envPath +'/'+ element +'/node_modules/compox/dist');
 					});
 					break;
 				case "compox-util":
 					rootList["compox-util"].forEach( function(element, index) {
-						fse.copySync(envPath + '/compox-util/js', envPath +'/'+ element +'/node_modules/compox-util/js');
+						fse.copySync(envPath + '/compox-util/src', envPath +'/'+ element +'/node_modules/compox-util/src');
+						fse.copySync(envPath + '/compox-util/dist', envPath +'/'+ element +'/node_modules/compox-util/dist');
 					});
 					break;
 				case "kero-fetch":
 					rootList["kero-fetch"].forEach( function(element, index) {
-						fse.copySync(envPath + '/kero-fetch/js', envPath +'/'+ element +'/node_modules/kero-fetch/js');
+						fse.copySync(envPath + '/kero-fetch/src', envPath +'/'+ element +'/node_modules/kero-fetch/src');
+						fse.copySync(envPath + '/kero-fetch/dist', envPath +'/'+ element +'/node_modules/kero-fetch/dist');
 					});
 					break;
 				case "neoui-kero-mixin":
 					rootList["neoui-kero-mixin"].forEach( function(element, index) {
-						fse.copySync(envPath + '/neoui-kero-mixin/js', envPath +'/'+ element +'/node_modules/neoui-kero-mixin/js');
+						fse.copySync(envPath + '/neoui-kero-mixin/src', envPath +'/'+ element +'/node_modules/neoui-kero-mixin/src');
+						fse.copySync(envPath + '/neoui-kero-mixin/dist', envPath +'/'+ element +'/node_modules/neoui-kero-mixin/dist');
+					});
+					break;
+				case "neoui-kero":
+					rootList["neoui-kero"].forEach( function(element, index) {
+						fse.copySync(envPath + '/neoui-kero/src', envPath +'/'+ element +'/node_modules/neoui-kero/src');
+						fse.copySync(envPath + '/neoui-kero/dist', envPath +'/'+ element +'/node_modules/neoui-kero/dist');
 					});
 					break;
 			}
@@ -218,7 +234,7 @@ module.exports = (options) => {
 		 * 输出u.js
 		 */
 		dist: function(){
-			var adapterPath = path.join(envPath ,"neoui-kero");
+			var adapterPath = path.join(envPath ,"tinper-moy");
 			var command = `cd ${adapterPath} && npm run utipbuild`;
 			execSync(command);
 			console.log('complete');

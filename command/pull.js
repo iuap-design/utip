@@ -18,7 +18,8 @@ const frameDir = [
 	'compox',
 	'compox-util',
 	'kero-fetch',
-	'neoui-kero-mixin'
+	'neoui-kero-mixin',
+	'tinper-moy'
 ];
 
 const dirs = fs.readdirSync(envPath); // 输出当前目录下的目录名
