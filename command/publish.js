@@ -4,6 +4,7 @@ const execSync = require('child_process').execSync;
 const chalk = require('chalk');
 const fse = require('fs-extra');
 const path = require('path');
+const inquirer = require('inquirer');
 
 // 仓库名
 const frameDir = [
@@ -27,14 +28,29 @@ module.exports = function() {
 
 	var pubFun = {
 		init: function() {
-			this.pkg();
+			this.choose();
+		},
+
+		/**
+		 * 选择需要发布的仓库
+		 */
+		choose: function(){
+			const oTHis = this;
+			return inquirer.prompt([{
+					type: 'checkbox',
+					name: 'selectRepo',
+					message: 'Please select :',
+					choices: frameDir
+			}]).then(function(answers) {
+				oTHis.pkg(answers.selectRepo);
+			});
 		},
 		/**
 		 * 更改各仓库package.json文件,并提交
 		 */
-		pkg: function() {
+		pkg: function(frameArr) {
 			var newSparrow,newCompox,newCompoxUtil,newNeoui,newMixin,newKero,newKeroFetch,newGrid,newTree,newPoly,newKeroAdapter;
-			frameDir.forEach(function(resname){
+			frameArr.forEach(function(resname){
 				var originVersion = require(envPath+ '/' + resname + '/package.json').version.split('.');
 				console.log(`${resname}老版本为${originVersion}`);
 				originVersion[originVersion.length-1]++;
