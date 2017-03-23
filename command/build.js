@@ -46,7 +46,7 @@ module.exports = (options) => {
             this.choose();
         },
 
-				/**
+        /**
          * 选择需要build的仓库
          */
         choose: function() {
@@ -57,7 +57,11 @@ module.exports = (options) => {
                 message: 'Please select :',
                 choices: npmDir
             }]).then(function(answers) {
-                oTHis.npmDirArr = answers.selectRepo;
+                if (answers.selectRepo.length == 0) {
+                    oTHis.npmDirArr = npmDir
+                } else {
+                    oTHis.npmDirArr = answers.selectRepo;
+                }
                 oTHis.runFun();
             });
         },
@@ -66,8 +70,8 @@ module.exports = (options) => {
             this.whole();
             console.log(chalk.green(`\n √ 已clone更新各仓库，准备清空dist目录`));
 
-						for (var i = 0; i < this.npmDirArr.length; i++) {
-								fse.emptyDirSync('./' + this.npmDirArr[i] + '/dist');
+            for (var i = 0; i < this.npmDirArr.length; i++) {
+                fse.emptyDirSync('./' + this.npmDirArr[i] + '/dist');
             }
             console.log(chalk.green(`\n √ 已清空dist目录，准备执行源码仓库输出`));
 
