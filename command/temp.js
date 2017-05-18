@@ -55,7 +55,7 @@ module.exports = () => {
 					'<link rel="stylesheet" type="text/css" href="./css/tree.css">',
 					'<!-- iuap design style end-->',
 					'<!--[if lte IE 8 ]>',
-					'<script src="//design.yyuap.com/static/uui/latest/js/u-polyfill.js"></script>',
+					'<script src="//design.yonyoucloud.com/static/uui/latest/js/u-polyfill.js"></script>',
 					'<![endif]-->',
 					'<style type="text/css">',
 					'html, body {',
@@ -95,7 +95,7 @@ module.exports = () => {
 					'</div>',
 					'<!-- content start-->',
 					'<!-- content end -->',
-					'<script src="http://design.yyuap.com/static/jquery/jquery-1.9.1.min.js"></script>',
+					'<script src="http://design.yonyoucloud.com/static/jquery/jquery-1.9.1.min.js"></script>',
 					'<!-- iuap desigin js start-->',
 					'<script src="./js/u.js"></script>',
 					'<script src="./js/u-grid.js"></script>',
@@ -103,7 +103,7 @@ module.exports = () => {
 					'<!-- iuap desigin js end-->',
 					'</body>',
 					'</html>'].join("\n");
-				
+
 				fs.writeFileSync(`${envPath}/${tplName}/index.html`, data);
 
 				process.exit();
